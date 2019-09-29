@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class DBMS {
     public static ArrayList<Movie> movies;
@@ -202,4 +202,66 @@ public class DBMS {
             index += 1;
         }
     }
+    private static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
+        put("==",8);
+        put("!=",8);
+        put("&",7);
+        put("|",5);
+        put("&&",4);
+        put("||",3);
+    }};
+    private static boolean isHigherPrec(String op, String sub)
+    {
+        if(precMap.containsKey(sub))
+            return (precMap.get(op) > precMap.get(sub));
+        return false;
+    }
+
+    public static ArrayList<String> postfix(ArrayList<String> infix)
+    {
+        StringBuilder output = new StringBuilder();
+        Deque<String> stack = new LinkedList<>();
+
+        for(String token : infix)
+        {
+            if(precMap.containsKey(token))
+            {
+                while(!stack.isEmpty() && isHigherPrec(token,stack.peek()))
+                {
+                    output.append(stack.pop()).append(' ');
+                }
+                stack.push(token);
+            }
+            else if(token.equals("("))
+            {
+                stack.push(token);
+            }
+            else if(token.equals(")"))
+            {
+                while(!stack.peek().equals("("))
+                {
+                    output.append(stack.pop()).append(' ');
+                }
+                stack.pop();
+            }
+            else
+            {
+                output.append(token).append(' ');
+            }
+
+        }
+
+        while(!stack.isEmpty())
+        {
+            output.append(stack.pop()).append(' ');
+        }
+        String str[] = output.toString().split(" ");
+        ArrayList<String> words = new ArrayList<String>();
+        for (String word : str){
+            words.add(word);
+        }
+        return words;
+
+    }
+
 }

@@ -35,6 +35,9 @@ public class Main {
             walker.walk(listener, programContext);
 
             // Action happens
+            if(DBMS.terminalNodes.contains("<-")) {
+                DBMS.terminalNodes = DBMS.postfix(DBMS.terminalNodes);
+            }
             System.out.println(DBMS.terminalNodes);
             DBMS.terminalNodes.clear();
 
