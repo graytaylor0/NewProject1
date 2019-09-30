@@ -322,7 +322,7 @@ public class DBMS {
 
     }
 
-    // Given a token parsed from the tree, chooses the appropriate function to run
+    // Given a command token parsed from the tree, chooses the appropriate function to run
     public void processCommand (String function) {
 
         switch (function) {
@@ -409,6 +409,7 @@ public class DBMS {
                 }
                 break;
 
+            //
             case ("DELETE FROM"):
                 break;
 
