@@ -35,9 +35,10 @@ public abstract class Person {
         this.name = "";
         this.age = 0;
     }
-    public Person(int id, String name, int age) {
+    public Person(int id, String name, int age, ArrayList<Movie> movies) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.movies = movies;
     }
 }

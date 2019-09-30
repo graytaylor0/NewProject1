@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class CastMember extends Person{
     private String role;
 
@@ -8,8 +10,8 @@ public class CastMember extends Person{
         this.role = "";
     }
 
-    public CastMember(int id, String name, int age, String role){
-        super(id, name, age);
+    public CastMember(int id, String name, int age, String role, ArrayList<Movie> movies){
+        super(id, name, age, movies);
         this.role = role;
     }
     public String getRole(){

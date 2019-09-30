@@ -307,13 +307,13 @@ public class DBMS {
 
         } else if (function.equals("INSERT INTO")) {
 
-            /* This shit is gonna suck to make,
+            // This shit is gonna suck to make,
             if (terminalNodes.get(1).equals("movies")) {
                 addMovie(new Movie());
-            } else if (terminalNodes.get(1).equals("person")) {
+            } else if (terminalNodes.get(1).equals("people")) {
                 if (terminalNodes.get(8).equals())
             }
-            */
+
 
         } else if (function.equals("SHOW")) {
 
