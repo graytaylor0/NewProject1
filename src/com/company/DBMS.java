@@ -1,5 +1,9 @@
 package com.company;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class DBMS {
@@ -14,6 +18,7 @@ public class DBMS {
             people = new ArrayList<Person>();
         }
     }
+
     public boolean compareTo(String operator, int num1, int num2){
         if (operator.equals("==")){
             return num1 == num2;
@@ -38,7 +43,6 @@ public class DBMS {
     public void addPerson(Person person){
         people.add(person);
     }
-
 
     //Get and remove movies
 
@@ -202,6 +206,35 @@ public class DBMS {
             index += 1;
         }
     }
+
+    public static <T> void writeToFile (ArrayList<T> data) {
+
+        FileWriter out = null;
+
+        try {
+            out = new FileWriter("output.txt");
+
+            for (int i = 0; i < data.size(); i++){
+                out.write((char[]) data.get(i));    // kind of hacky, the cast isn't necessary except to get it to compile
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {/*
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+        }
+    }
+
+    public static void closeFile () {
+        System.out.println("File Closed");
+    }
+
     private static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
         put("==",8);
         put("!=",8);
@@ -210,6 +243,7 @@ public class DBMS {
         put("&&",4);
         put("||",3);
     }};
+
     private static boolean isHigherPrec(String op, String sub)
     {
         if(precMap.containsKey(sub))
@@ -262,6 +296,62 @@ public class DBMS {
         }
         return words;
 
+    }
+
+    // Given a token parsed from the tree, chooses the appropriate function to run
+    public void processCommand (String function) {
+
+        if (function.equals("CREATE TABLE")){
+
+            CreateTable(terminalNodes.get(1));
+
+        } else if (function.equals("INSERT INTO")) {
+
+            /* This shit is gonna suck to make
+            if (terminalNodes.get(1).equals("movies")) {
+                addMovie(new Movie());
+            } else if (terminalNodes.get(1).equals("person")) {
+                if (terminalNodes.get(8).equals())
+            }
+            */
+
+        } else if (function.equals("SHOW")) {
+
+            if (terminalNodes.get(1).equals("movies")) {
+                showMovies();
+            } else if (terminalNodes.get(1).equals("people")) {
+                showMovies();
+            } else {
+                System.out.println("Error: Attempting to show invalid paramater");
+            }
+
+        } else if (function.equals("OPEN")) {
+
+            System.out.println("File ready. Use WRITE to write data.");
+
+        } else if (function.equals("CLOSE")) {
+
+            closeFile();
+
+        } else if (function.equals("WRITE")) {
+
+            if (terminalNodes.get(1).equals("movies")) {
+                writeToFile(movies);
+            } else if (terminalNodes.get(1).equals("people")) {
+                writeToFile(people);
+            } else {
+                System.out.println("Error: Attempting to show invalid paramater");
+            }
+
+        } else if (function.equals("EXIT")) {
+
+        } else if (function.equals("UPDATE")) {
+
+        } else if (function.equals("DELETE FROM")) {
+
+        } else {
+            System.out.println("Error: Unrecognized command entered");
+        }
     }
 
 }
