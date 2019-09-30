@@ -301,57 +301,65 @@ public class DBMS {
     // Given a token parsed from the tree, chooses the appropriate function to run
     public void processCommand (String function) {
 
-        if (function.equals("CREATE TABLE")){
+        switch (function) {
 
-            CreateTable(terminalNodes.get(1));
+            case ("OPEN"):
+                System.out.println("File ready. Use WRITE to write data.");
+                break;
 
-        } else if (function.equals("INSERT INTO")) {
+            case ("CLOSE"):
+                closeFile();
+                break;
 
-            // This shit is gonna suck to make,
-            if (terminalNodes.get(1).equals("movies")) {
-                addMovie(new Movie());
-            } else if (terminalNodes.get(1).equals("people")) {
-                if (terminalNodes.get(8).equals())
-            }
+            case ("WRITE"):
+                if (terminalNodes.get(1).equals("movies")) {
+                    writeToFile(movies, "movies.txt");
+                } else if (terminalNodes.get(1).equals("people")) {
+                    writeToFile(people, "people.txt");
+                } else {
+                    System.out.println("Error: Attempting to show invalid paramater");
+                }
+                break;
 
+            case ("EXIT"):
+                break;
 
-        } else if (function.equals("SHOW")) {
+            case ("SHOW"):
 
-            if (terminalNodes.get(1).equals("movies")) {
-                showMovies();
-            } else if (terminalNodes.get(1).equals("people")) {
-                showMovies();
-            } else {
-                System.out.println("Error: Attempting to show invalid paramater");
-            }
+                if (terminalNodes.get(1).equals("movies")) {
+                    showMovies();
+                } else if (terminalNodes.get(1).equals("people")) {
+                    showMovies();
+                } else {
+                    System.out.println("Error: Attempting to show invalid paramater");
+                }
 
-        } else if (function.equals("OPEN")) {
+                break;
 
-            System.out.println("File ready. Use WRITE to write data.");
+            case ("CREATE TABLE"):
+                CreateTable(terminalNodes.get(1));
+                break;
 
-        } else if (function.equals("CLOSE")) {
+            case ("UPDATE"):
+                break;
 
-            closeFile();
+            case ("INSERT INTO"):
 
-        } else if (function.equals("WRITE")) {
+                // This shit is gonna suck to make,
+                if (terminalNodes.get(1).equals("movies")) {
+                    addMovie(new Movie());
+                } else if (terminalNodes.get(1).equals("people")) {
+                    if (terminalNodes.get(7).equals("crew")) ;
+                }
 
-            if (terminalNodes.get(1).equals("movies")) {
-                writeToFile(movies, "movies.txt");
-            } else if (terminalNodes.get(1).equals("people")) {
-                writeToFile(people, "people.txt");
-            } else {
-                System.out.println("Error: Attempting to show invalid paramater");
-            }
+                break;
 
-        } else if (function.equals("EXIT")) {
+            case ("DELETE FROM"):
+                break;
 
-        } else if (function.equals("UPDATE")) {
-
-        } else if (function.equals("DELETE FROM")) {
-
-        } else {
-            System.out.println("Error: Unrecognized command entered");
+            default:
+                System.out.println("Error: Unrecognized command entered");
+                break;
         }
     }
-
 }
