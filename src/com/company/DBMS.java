@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class DBMS {
@@ -85,6 +86,18 @@ public class DBMS {
             }
             index += 1;
         }
+    }
+
+    public Movie getMovieByName (String name) {
+
+        int i;
+
+        for (i = 0; i < movies.size(); i++) {
+            if (movies.get(i).getName().equals(name));
+            break;
+        }
+
+        return movies.get(i);
     }
 
     public ArrayList<Movie> getMoviesByName(String name){
@@ -345,11 +358,34 @@ public class DBMS {
 
             case ("INSERT INTO"):
 
-                // This shit is gonna suck to make,
+                ArrayList<Movie> tempList = new ArrayList<>();  // For movies
+
+                // This is gonna suck to make
                 if (terminalNodes.get(1).equals("movies")) {
                     addMovie(new Movie());
                 } else if (terminalNodes.get(1).equals("people")) {
-                    if (terminalNodes.get(7).equals("crew")) ;
+                    if (terminalNodes.get(7).equals("crew")) {      // change this to dictionary for roles
+
+                        // Loops through parameter list and adds movie item to list inside person
+                        for (int i = 9; i < terminalNodes.size() - 2; i++) {
+                            tempList.add(getMovieByName(terminalNodes.get(i)));
+                        }
+                        // Big boi insert
+                        people.add(new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+
+                    } else if (terminalNodes.get(7).equals("cast")) {
+
+                        // Loops through parameter list and adds movie item to list inside person
+                        for (int i = 9; i < terminalNodes.size() - 2; i++) {
+                            tempList.add(getMovieByName(terminalNodes.get(i)));
+                        }
+                        // Big boi insert
+                        people.add(new CastMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+                    } else {
+                        System.out.println("Error: Unrecognized job");
+                    }
+                } else {
+                    System.out.print("Error: Unrecognized table");
                 }
 
                 break;
