@@ -178,17 +178,6 @@ public class DBMS {
         return new CastMember();
     }
 
-    public Person getPersonByName (String name) {
-        int i;
-
-        for (i = 0; i < people.size(); i++) {
-            if (people.get(i).getName().equals(name));
-            break;
-        }
-
-        return people.get(i);
-    }
-
     public void removePeopleByName(String name){
         int index = 0;
         while (index < people.size()){
@@ -369,21 +358,12 @@ public class DBMS {
 
             case ("INSERT INTO"):
 
+                ArrayList<Movie> tempList = new ArrayList<>();  // For movies
+
                 // This is gonna suck to make
                 if (terminalNodes.get(1).equals("movies")) {
-                    ArrayList<Person> tempList = new ArrayList<>();
-
-                    // Loops through parameter list and adds movie item to list inside person
-                    for (int i = 9; i < terminalNodes.size() - 2; i++) {
-                        tempList.add(getPersonByName(terminalNodes.get(i)));
-                    }
-
-                    // Big boi insert
-
-                    addMovie(new Movie(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+                    addMovie(new Movie());
                 } else if (terminalNodes.get(1).equals("people")) {
-                    ArrayList<Movie> tempList = new ArrayList<>();  // For movies
-
                     if (terminalNodes.get(7).equals("crew")) {      // change this to dictionary for roles
 
                         // Loops through parameter list and adds movie item to list inside person
@@ -391,7 +371,7 @@ public class DBMS {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
-                        addPerson(new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+                        people.add(new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
 
                     } else if (terminalNodes.get(7).equals("cast")) {
 
@@ -400,13 +380,14 @@ public class DBMS {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
-                        addPerson(new CastMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+                        people.add(new CastMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
                     } else {
                         System.out.println("Error: Unrecognized job");
                     }
                 } else {
                     System.out.print("Error: Unrecognized table");
                 }
+
                 break;
 
             case ("DELETE FROM"):
