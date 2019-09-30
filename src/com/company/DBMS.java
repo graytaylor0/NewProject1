@@ -207,12 +207,12 @@ public class DBMS {
         }
     }
 
-    public static <T> void writeToFile (ArrayList<T> data) {
+    public static <T> void writeToFile (ArrayList<T> data, String name) {
 
         FileWriter out = null;
 
         try {
-            out = new FileWriter("output.txt");
+            out = new FileWriter(name);
 
             for (int i = 0; i < data.size(); i++){
                 out.write((char[]) data.get(i));    // kind of hacky, the cast isn't necessary except to get it to compile
@@ -220,14 +220,14 @@ public class DBMS {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {/*
+        } finally {
             try {
                 if (out != null) {
                     out.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
 
@@ -307,7 +307,7 @@ public class DBMS {
 
         } else if (function.equals("INSERT INTO")) {
 
-            /* This shit is gonna suck to make
+            /* This shit is gonna suck to make,
             if (terminalNodes.get(1).equals("movies")) {
                 addMovie(new Movie());
             } else if (terminalNodes.get(1).equals("person")) {
@@ -336,9 +336,9 @@ public class DBMS {
         } else if (function.equals("WRITE")) {
 
             if (terminalNodes.get(1).equals("movies")) {
-                writeToFile(movies);
+                writeToFile(movies, "movies.txt");
             } else if (terminalNodes.get(1).equals("people")) {
-                writeToFile(people);
+                writeToFile(people, "people.txt");
             } else {
                 System.out.println("Error: Attempting to show invalid paramater");
             }
