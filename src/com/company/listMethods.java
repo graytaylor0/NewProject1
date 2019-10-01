@@ -27,6 +27,7 @@ public class listMethods {
         //add person to movies list
         //add movies to person list
         //"might not have to do this" ~ Paul Taele, 2019
+        return new ArrayList<Object>();
     }
 
 

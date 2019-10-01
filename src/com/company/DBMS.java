@@ -11,7 +11,11 @@ public class DBMS {
     public static ArrayList<Movie> movies;
     public static ArrayList<Person> people;
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
-    private static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
+    public static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
+        put("<", 9);
+        put("<=", 9);
+        put(">=", 9);
+        put(">", 9);
         put("==",8);
         put("!=",8);
         put("&",7);
@@ -269,35 +273,37 @@ public class DBMS {
 
     private static boolean isHigherPrec(String op, String sub) {
         if(precMap.containsKey(sub))
-            return (precMap.get(op) > precMap.get(sub));
+            return (precMap.get(op) < precMap.get(sub));
         return false;
     }
 
     public static ArrayList<String> postfix(ArrayList<String> infix) {
         StringBuilder output = new StringBuilder();
-        Deque<String> stack = new LinkedList<>();
+        ArrayList<String> stack = new ArrayList<String>();
 
         for(String token : infix)
         {
             if(precMap.containsKey(token))
             {
-                while(!stack.isEmpty() && isHigherPrec(token,stack.peek()))
-                {
-                    output.append(stack.pop()).append(' ');
+
+                if (!stack.isEmpty() && !stack.get(stack.size() - 1).equals("(")) {
+                    while (!stack.isEmpty() && isHigherPrec(token, stack.get(stack.size() - 1))){
+                        output.append(stack.remove(stack.size() - 1)).append(' ');
+                    }
                 }
-                stack.push(token);
+                stack.add(token);
             }
             else if(token.equals("("))
             {
-                stack.push(token);
+                stack.add(token);
             }
             else if(token.equals(")"))
             {
-                while(!stack.peek().equals("("))
+                while(!stack.get(stack.size() - 1).equals("("))
                 {
-                    output.append(stack.pop()).append(' ');
+                    output.append(stack.remove(stack.size() - 1)).append(' ');
                 }
-                stack.pop();
+                stack.remove(stack.size() - 1);
             }
             else
             {
@@ -308,7 +314,9 @@ public class DBMS {
 
         while(!stack.isEmpty())
         {
-            output.append(stack.pop()).append(' ');
+            if (!stack.get(stack.size() - 1).equals("(")) {
+                output.append(stack.remove(stack.size() - 1)).append(' ');
+            }
         }
         String str[] = output.toString().split(" ");
         ArrayList<String> words = new ArrayList<String>();
@@ -316,7 +324,6 @@ public class DBMS {
             words.add(word);
         }
         return words;
-
     }
 
     // Given a token parsed from the tree, chooses the appropriate function to run
@@ -329,7 +336,7 @@ public class DBMS {
                 break;
 
             case ("CLOSE"):
-                closeFile();
+                closeFile();    // Calls very important function that definitely closes the file
                 break;
 
             case ("WRITE"):

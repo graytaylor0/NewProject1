@@ -36,9 +36,11 @@ public class Main {
 
             // Action happens
             if(DBMS.terminalNodes.contains("<-")) {
+                System.out.println(DBMS.terminalNodes);
                 DBMS.terminalNodes = DBMS.postfix(DBMS.terminalNodes);
+                System.out.println(DBMS.terminalNodes);
             }
-            System.out.println(DBMS.terminalNodes);
+            //System.out.println(DBMS.terminalNodes);
             DBMS.terminalNodes.clear();
 
         }
