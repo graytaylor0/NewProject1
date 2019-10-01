@@ -36,9 +36,13 @@ public class Main {
 
             // Action happens
             if(DBMS.terminalNodes.contains("<-")) {
-                System.out.println(DBMS.terminalNodes);
+                //System.out.println(DBMS.terminalNodes)
+                String type = DBMS.terminalNodes.get(DBMS.terminalNodes.size() - 1);
                 DBMS.terminalNodes = DBMS.postfix(DBMS.terminalNodes);
-                System.out.println(DBMS.terminalNodes);
+                QueryCommands.processQuery(DBMS.terminalNodes, type);
+                //System.out.println(DBMS.terminalNodes);
+            } else {
+                DBMS.processCommand(DBMS.terminalNodes.get(0));
             }
             //System.out.println(DBMS.terminalNodes);
             DBMS.terminalNodes.clear();

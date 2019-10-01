@@ -1,0 +1,4 @@
+INSERT INTO movies VALUES FROM (0, "Spiderman", 2002, ("Taylor", "Nick"))
+INSERT INTO movies VALUES FROM (1, "Batman", 2008, ("Tay", "Ni"))
+INSERT INTO movies VALUES FROM (2, "Superman", 2004, ("T", "N"))
+INSERT INTO movies VALUES FROM (3, "Joker", 2019, ("r", "k"))

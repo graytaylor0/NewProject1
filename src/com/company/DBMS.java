@@ -24,7 +24,7 @@ public class DBMS {
         put("||",3);
     }};
 
-    public void CreateTable(String type) {
+    public static void CreateTable(String type) {
         if (type == "movies") {
             movies = new ArrayList<Movie>();
         } else if (type == "people"){
@@ -32,7 +32,7 @@ public class DBMS {
         }
     }
 
-    public boolean compareTo(String operator, int num1, int num2) {
+    public static boolean compareTo(String operator, int num1, int num2) {
         if (operator.equals("==")){
             return num1 == num2;
         }else if (operator.equals("!=")) {
@@ -49,17 +49,17 @@ public class DBMS {
         return false;
     }
 
-    public void addMovie(Movie movie){
+    public static void addMovie(Movie movie){
         movies.add(movie);
     }
 
-    public void addPerson(Person person){
+    public static void addPerson(Person person){
         people.add(person);
     }
 
     //Get and remove movies
 
-    public Movie getMovieById(int id) {
+    public static Movie getMovieById(int id) {
         for (int i = 0; i < movies.size(); i++) {
             if (movies.get(i).getId() == id) {
                 return movies.get(i);
@@ -68,7 +68,7 @@ public class DBMS {
         return new Movie();
     }
 
-    public Movie removeMovieById(int id) {
+    public static Movie removeMovieById(int id) {
         for (int i = 0; i < movies.size(); i++){
             if (movies.get(i).getId() == id){
                 Movie tempMovie = movies.get(i);
@@ -79,7 +79,7 @@ public class DBMS {
         return new Movie();
     }
 
-    public ArrayList<Movie> getMoviesByGenre(String genre) {
+    public static ArrayList<Movie> getMoviesByGenre(String genre) {
         ArrayList<Movie> filtered_movies = new ArrayList<Movie>();
         for (int i = 0; i < movies.size(); i++) {
             if (movies.get(i).getGenre() == genre) {
@@ -89,7 +89,7 @@ public class DBMS {
         return filtered_movies;
     }
 
-    public void removeMoviesByGenre(String genre) {
+    public static void removeMoviesByGenre(String genre) {
         int index = 0;
         while (index < movies.size()){
             if (movies.get(index).getGenre() == genre){
@@ -100,7 +100,7 @@ public class DBMS {
         }
     }
 
-    public Movie getMovieByName (String name) {
+    public static Movie getMovieByName (String name) {
 
         int i;
 
@@ -112,7 +112,7 @@ public class DBMS {
         return movies.get(i);
     }
 
-    public ArrayList<Movie> getMoviesByName(String name) {
+    public static ArrayList<Movie> getMoviesByName(String name) {
         ArrayList<Movie> filtered_movies = new ArrayList<Movie>();
         for (int i = 0; i < movies.size(); i++) {
             if (movies.get(i).getName() == name) {
@@ -122,7 +122,7 @@ public class DBMS {
         return filtered_movies;
     }
 
-    public Movie removeMovieByName(String name) {
+    public static Movie removeMovieByName(String name) {
         for (int i = 0; i < movies.size(); i++){
             if (movies.get(i).getName() == name){
                 Movie tempMovie = movies.get(i);
@@ -133,7 +133,7 @@ public class DBMS {
         return new Movie();
     }
 
-    public ArrayList<Movie> getMoviesByYear(String operator, int year) {
+    public static ArrayList<Movie> getMoviesByYear(String operator, int year) {
         ArrayList<Movie> filtered_movies = new ArrayList<Movie>();
         for (int i = 0; i < movies.size(); i++) {
             if (compareTo(operator, movies.get(i).getYear(), year)) {
@@ -143,7 +143,7 @@ public class DBMS {
         return filtered_movies;
     }
 
-    public void removeMoviesByYear(String operator, int year) {
+    public static void removeMoviesByYear(String operator, int year) {
         int index = 0;
         while (index < movies.size()){
             if (compareTo(operator, movies.get(index).getYear(), year)){
@@ -155,14 +155,14 @@ public class DBMS {
     }
 
     //show movies
-    public void showMovies() {
+    public static void showMovies() {
         for (int i = 0; i < movies.size(); i++){
             System.out.println(movies.get(i));
         }
     }
 
     //show people
-    public void showPeople() {
+    public static void showPeople() {
         for (int i = 0; i < people.size(); i++){
             System.out.println(people.get(i));
         }
@@ -170,7 +170,7 @@ public class DBMS {
 
     // get and remove people
 
-    public Person getPersonById(int id) {
+    public static Person getPersonById(int id) {
         for (int i = 0; i < people.size(); i++) {
             if (people.get(i).getId() == id) {
                 return people.get(i);
@@ -179,7 +179,7 @@ public class DBMS {
         return new CastMember();
     }
 
-    public Person removePersonById(int id) {
+    public static Person removePersonById(int id) {
         for (int i = 0; i < people.size(); i++){
             if (people.get(i).getId() == id){
                 Person tempPerson = people.get(i);
@@ -190,7 +190,7 @@ public class DBMS {
         return new CastMember();
     }
 
-    public Person getPersonByName (String name) {
+    public static Person getPersonByName (String name) {
         int i;
 
         for (i = 0; i < people.size(); i++) {
@@ -201,7 +201,7 @@ public class DBMS {
         return people.get(i);
     }
 
-    public void removePeopleByName(String name) {
+    public static void removePeopleByName(String name) {
         int index = 0;
         while (index < people.size()){
             if (people.get(index).getName() == name){
@@ -212,7 +212,7 @@ public class DBMS {
         }
     }
 
-    public ArrayList<Person> getPeopleByName(String name) {
+    public static ArrayList<Person> getPeopleByName(String name) {
         ArrayList<Person> filtered_people = new ArrayList<Person>();
         for (int i = 0; i < people.size(); i++) {
             if (people.get(i).getName() == name) {
@@ -222,7 +222,7 @@ public class DBMS {
         return filtered_people;
     }
 
-    public ArrayList<Person> getPeopleByAge(String operator, int age) {
+    public static ArrayList<Person> getPeopleByAge(String operator, int age) {
         ArrayList<Person> filtered_people = new ArrayList<Person>();
         for (int i = 0; i < people.size(); i++) {
             if (compareTo(operator, people.get(i).getAge(), age)) {
@@ -232,7 +232,7 @@ public class DBMS {
         return filtered_people;
     }
 
-    public void removePeopleByAge(String operator, int age) {
+    public static void removePeopleByAge(String operator, int age) {
         int index = 0;
         while (index < people.size()){
             if (compareTo(operator, people.get(index).getAge(), age)){
@@ -327,7 +327,7 @@ public class DBMS {
     }
 
     // Given a token parsed from the tree, chooses the appropriate function to run
-    public void processCommand (String function) {
+    public static void processCommand (String function) {
 
         switch (function) {
 

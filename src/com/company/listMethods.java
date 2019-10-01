@@ -1,3 +1,4 @@
+package com.company;
 import com.company.Movie;
 import com.company.Person;
 
