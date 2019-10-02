@@ -1,13 +1,13 @@
 package com.company;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBMS {
+    public static ArrayList<Table> tables = new ArrayList<Table>();
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
     public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
@@ -31,6 +31,8 @@ public class DBMS {
         } else if (type == "people"){
             people = new ArrayList<Person>();
         }
+
+
     }
 
     public static boolean compareTo(String operator, int num1, int num2) {
@@ -360,7 +362,7 @@ public class DBMS {
                 if (terminalNodes.get(1).equals("movies")) {
                     showMovies();
                 } else if (terminalNodes.get(1).equals("people")) {
-                    showMovies();
+                    showPeople();
                 } else {
                     System.out.println("Error: Attempting to show invalid paramater");
                 }
@@ -368,7 +370,10 @@ public class DBMS {
                 break;
 
             case ("CREATE TABLE"):
-                CreateTable(terminalNodes.get(1));
+               // CreateTable(terminalNodes.get(1));
+                Table myTable = new Table();
+                tables.add(myTable.createTable(DBMS.terminalNodes));
+                //System.out.println(tables);
                 break;
 
             case ("UPDATE"):
@@ -411,7 +416,7 @@ public class DBMS {
                         case ("movies"):
                             break;
 
-                            case ()
+                            //case ()
 
                     }
 

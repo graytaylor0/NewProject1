@@ -1,6 +1,4 @@
 package com.company;
-import sun.security.pkcs11.Secmod;
-
 import java.util.ArrayList;
 
 public class QueryCommands {
@@ -24,13 +22,14 @@ public class QueryCommands {
                 index += 1;
             }
         }
-        System.out.println(stack);
+        //System.out.println(stack);
 
         if (command.equals("select")){
             //return stack[0]
             System.out.println(stack.get(0));
         }else if (command.equals("project")){
             // loop through stack of 0 and get the attributes specified
+
         }
     }
 
