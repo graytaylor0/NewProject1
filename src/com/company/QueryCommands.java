@@ -12,9 +12,7 @@ public class QueryCommands {
         while (index < terminal_node_length){
             if (!DBMS.precMap.containsKey(terminalNodes.get(index))){
                 // take terminalNodes[index] (operand) terminalNodes[index + 2] (operator) terminalNodes[index + 1] (operand)
-                if (type.equals("movies"))
-                    stack.add(performOperationOnTerminalNodes(terminalNodes.get(index), terminalNodes.get(index + 2), terminalNodes.get(index + 1), type));
-                else if (type.equals("people"));
+                stack.add(performOperationOnTerminalNodes(terminalNodes.get(index), terminalNodes.get(index + 2), terminalNodes.get(index + 1), type));
                 index += 3;
             } else {
                 // pop off last two items in stack and perform this operator on them, push the result to a new table
@@ -26,6 +24,7 @@ public class QueryCommands {
                 index += 1;
             }
         }
+        System.out.println(stack);
 
         if (command.equals("select")){
             //return stack[0]

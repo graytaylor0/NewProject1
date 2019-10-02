@@ -16,7 +16,7 @@ public class Movie {
         cast_and_crew = new ArrayList<Person>();
     }
 
-    public Movie(int id, String name, int year, String genre, ArrayList<Person> cast_and_crew){
+    public Movie(int id, String name, int year, String genre, ArrayList<Person> cast_and_crew){//, ArrayList<Person> cast_and_crew){
         this.genre = genre;
         this.id = id;
         this.year = year;

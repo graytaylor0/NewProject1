@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class DBMS {
-    public static ArrayList<Movie> movies;
+    public static ArrayList<Movie> movies = new ArrayList<Movie>();
     public static ArrayList<Person> people;
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
     public static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
@@ -82,7 +82,7 @@ public class DBMS {
     public static ArrayList<Movie> getMoviesByGenre(String genre) {
         ArrayList<Movie> filtered_movies = new ArrayList<Movie>();
         for (int i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getGenre() == genre) {
+            if (movies.get(i).getGenre().equals(genre)) {
                 filtered_movies.add(movies.get(i));
             }
         }
@@ -92,7 +92,7 @@ public class DBMS {
     public static void removeMoviesByGenre(String genre) {
         int index = 0;
         while (index < movies.size()){
-            if (movies.get(index).getGenre() == genre){
+            if (movies.get(index).getGenre().equals(genre)){
                 movies.remove(index);
                 index -= 1;
             }
@@ -115,7 +115,7 @@ public class DBMS {
     public static ArrayList<Movie> getMoviesByName(String name) {
         ArrayList<Movie> filtered_movies = new ArrayList<Movie>();
         for (int i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getName() == name) {
+            if (movies.get(i).getName().equals(name)) {
                 filtered_movies.add(movies.get(i));
             }
         }
@@ -204,7 +204,7 @@ public class DBMS {
     public static void removePeopleByName(String name) {
         int index = 0;
         while (index < people.size()){
-            if (people.get(index).getName() == name){
+            if (people.get(index).getName().equals(name)){
                 people.remove(index);
                 index -= 1;
             }
@@ -215,7 +215,7 @@ public class DBMS {
     public static ArrayList<Person> getPeopleByName(String name) {
         ArrayList<Person> filtered_people = new ArrayList<Person>();
         for (int i = 0; i < people.size(); i++) {
-            if (people.get(i).getName() == name) {
+            if (people.get(i).getName().equals(name)) {
                 filtered_people.add(people.get(i));
             }
         }
@@ -316,6 +316,8 @@ public class DBMS {
         {
             if (!stack.get(stack.size() - 1).equals("(")) {
                 output.append(stack.remove(stack.size() - 1)).append(' ');
+            }else {
+                stack.remove(stack.size() - 1);
             }
         }
         String str[] = output.toString().split(" ");
