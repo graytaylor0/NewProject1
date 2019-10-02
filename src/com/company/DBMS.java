@@ -9,7 +9,7 @@ import java.util.*;
 
 public class DBMS {
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
-    public static ArrayList<Person> people;
+    public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
     public static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
         put("<", 9);
@@ -23,6 +23,7 @@ public class DBMS {
         put("&&",4);
         put("||",3);
     }};
+
 
     public static void CreateTable(String type) {
         if (type == "movies") {
@@ -371,6 +372,52 @@ public class DBMS {
                 break;
 
             case ("UPDATE"):
+                String attribute = terminalNodes.get(3);
+                if (terminalNodes.get(1).equals("movies")) {
+
+                    switch (attribute) {
+
+                        case ("id"):
+                            break;
+
+                        case ("name"):
+                            break;
+
+                        case ("year"):
+                            break;
+
+                        case ("genre"):
+                            break;
+
+                        case ("cast and crew"):
+                            break;
+
+                    }
+
+
+                } else if (terminalNodes.get(1).equals("people")) {
+
+                    switch (attribute) {
+
+                        case ("id"):
+                            break;
+
+                        case ("name"):
+                            break;
+
+                        case ("age"):
+                            break;
+
+                        case ("movies"):
+                            break;
+
+                            case ()
+
+                    }
+
+                } else {
+                    System.out.println("Error: Unrecognized table");
+                }
                 break;
 
             case ("INSERT INTO"):
@@ -390,19 +437,19 @@ public class DBMS {
                 } else if (terminalNodes.get(1).equals("people")) {
                     ArrayList<Movie> tempList = new ArrayList<>();  // For movies
 
-                    if (terminalNodes.get(7).equals("crew")) {      // change this to dictionary for roles
+                    if (terminalNodes.get(7).equals("\"crew\"")) {      // change this to dictionary for roles
 
                         // Loops through parameter list and adds movie item to list inside person
-                        for (int i = 9; i < terminalNodes.size() - 2; i++) {
+                        for (int i = 8; i < terminalNodes.size() - 1; i++) {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
                         addPerson(new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
 
-                    } else if (terminalNodes.get(7).equals("cast")) {
+                    } else if (terminalNodes.get(7).equals("\"cast\"")) {
 
                         // Loops through parameter list and adds movie item to list inside person
-                        for (int i = 9; i < terminalNodes.size() - 2; i++) {
+                        for (int i = 8; i < terminalNodes.size() - 1; i++) {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
