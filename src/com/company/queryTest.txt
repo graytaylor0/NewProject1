@@ -1,1 +1,2 @@
-b <- select ( genre == Horror || genre == Action && year == 1980 || name == Superman ) movies;
+b <- project(name, genre) (select (genre == Comedy || genre == Action && year > 2002)) movies;
+b <- select (genre == Comedy || genre == Action && year > 2002) movies;

@@ -9,7 +9,7 @@ import java.util.*;
 
 public class DBMS {
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
-    public static ArrayList<Person> people;
+    public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
     public static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
         put("<", 9);

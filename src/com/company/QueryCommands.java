@@ -8,9 +8,16 @@ public class QueryCommands {
         ArrayList<ArrayList<Object>> stack = new ArrayList<ArrayList<Object>>();
         int terminal_node_length = terminalNodes.size();
         String command = terminalNodes.get(2);
-        int index = 3;
-        while (index < terminal_node_length){
-            if (!DBMS.precMap.containsKey(terminalNodes.get(index))){
+        int index = 2;
+        if (command.equals("project")){
+            while (index < terminalNodes.size() && !terminalNodes.get(index).equals("select")){
+                index += 1;
+            }
+        }
+        index += 1;
+        int selectStart = index;
+        while (index < terminal_node_length) {
+            if (!DBMS.precMap.containsKey(terminalNodes.get(index))) {
                 // take terminalNodes[index] (operand) terminalNodes[index + 2] (operator) terminalNodes[index + 1] (operand)
                 stack.add(performOperationOnTerminalNodes(terminalNodes.get(index), terminalNodes.get(index + 2), terminalNodes.get(index + 1), type));
                 index += 3;
@@ -24,13 +31,14 @@ public class QueryCommands {
                 index += 1;
             }
         }
-        System.out.println(stack);
 
         if (command.equals("select")){
             //return stack[0]
             System.out.println(stack.get(0));
         }else if (command.equals("project")){
             // loop through stack of 0 and get the attributes specified
+            //System.out.println(stack.get(0));
+
         }
     }
 
