@@ -36,6 +36,7 @@ public class Table {
         int nameIndex = 1;
         int lastIndex = -1;
         String myName = list.get(nameIndex);
+        name = myName;
         Table retVal = new Table();
         for(int i = nameIndex; i < list.size(); i ++)
         {

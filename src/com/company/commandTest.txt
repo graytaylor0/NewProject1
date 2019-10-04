@@ -1,9 +1,13 @@
 INSERT INTO movies VALUES FROM (0, "Spiderman", 2002, "comedy" ("Taylor", "Nick"))
-INSERT INTO movies VALUES FROM (1, "Batman", 2008, ("Tay", "Ni"))
-INSERT INTO movies VALUES FROM (2, "Superman", 2004, ("T", "N"))
-INSERT INTO movies VALUES FROM (3, "Joker", 2019, ("r", "k"))
+INSERT INTO movies VALUES FROM (1, "Batman", 2008, "drama" ("Tay", "Ni"))
+INSERT INTO movies VALUES FROM (2, "Superman", 2004, "action" ("T", "N"))
+INSERT INTO movies VALUES FROM (3, "Joker", 2019, "horror" ("r", "k"))
 
 INSERT INTO people VALUES FROM (4, "Bob", 23, "cast", ("Spiderman", "Batman"))
 INSERT INTO people VALUES FROM (6, "Bill", 23, "crew", ("Spiderman", "Batman"))
 
 SHOW people
+
+UPDATE Bob SET age = 7
+
+Show people

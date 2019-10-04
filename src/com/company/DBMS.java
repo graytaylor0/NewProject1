@@ -8,6 +8,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class DBMS {
+
+    public static ArrayList<Table> tables = new ArrayList<Table>();
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
     public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
@@ -48,6 +50,10 @@ public class DBMS {
             return num1 <= num2;
         }
         return false;
+    }
+
+    public static void addTable (Table table) {
+        tables.add(table);
     }
 
     public static void addMovie(Movie movie){
@@ -360,7 +366,7 @@ public class DBMS {
                 if (terminalNodes.get(1).equals("movies")) {
                     showMovies();
                 } else if (terminalNodes.get(1).equals("people")) {
-                    showMovies();
+                    showPeople();
                 } else {
                     System.out.println("Error: Attempting to show invalid paramater");
                 }
@@ -368,50 +374,55 @@ public class DBMS {
                 break;
 
             case ("CREATE TABLE"):
-                CreateTable(terminalNodes.get(1));
+                Table newTable = new Table();
+                newTable.createTable(terminalNodes);
+                addTable(newTable);
                 break;
 
             case ("UPDATE"):
+                System.out.println(terminalNodes);
                 String attribute = terminalNodes.get(3);
-                if (terminalNodes.get(1).equals("movies")) {
+                if (movies.contains(getMovieByName(terminalNodes.get(1)))) {
 
                     switch (attribute) {
 
                         case ("id"):
+                            getMovieByName(terminalNodes.get(1)).setId(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
                         case ("name"):
+                            getMovieByName(terminalNodes.get(1)).setName(terminalNodes.get(5));
                             break;
 
                         case ("year"):
+                            getMovieByName(terminalNodes.get(1)).setYear(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
                         case ("genre"):
+                            getMovieByName(terminalNodes.get(1)).setGenre(terminalNodes.get(5));
                             break;
 
-                        case ("cast and crew"):
+                        default:
+                            System.out.println("Error: Unrecognized attribute");
                             break;
-
                     }
 
 
-                } else if (terminalNodes.get(1).equals("people")) {
+                } else if (people.contains(getPeopleByName(terminalNodes.get(1)))) {
 
                     switch (attribute) {
 
                         case ("id"):
+                            getPersonByName(terminalNodes.get(1)).setId(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
                         case ("name"):
+                            getPersonByName(terminalNodes.get(1)).setName(terminalNodes.get(5));
                             break;
 
                         case ("age"):
+                            getPersonByName(terminalNodes.get(1)).setAge(Integer.parseInt(terminalNodes.get(5)));
                             break;
-
-                        case ("movies"):
-                            break;
-
-                            case ()
 
                     }
 
@@ -426,8 +437,8 @@ public class DBMS {
                 if (terminalNodes.get(1).equals("movies")) {
                     ArrayList<Person> tempList = new ArrayList<>();
 
-                    // Loops through parameter list and adds movie item to list inside person
-                    for (int i = 9; i < terminalNodes.size() - 2; i++) {
+                    // Loops through parameter list and adds person item to list inside movie
+                    for (int i = 8; i < terminalNodes.size() - 2; i++) {
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
 
