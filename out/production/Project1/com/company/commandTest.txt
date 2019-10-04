@@ -8,6 +8,8 @@ INSERT INTO movies VALUES FROM (3, "Joker", 2019, ("r", "k"))
 INSERT INTO people VALUES FROM (4, "Bob", 23, "cast", ("Spiderman", "Batman"))
 INSERT INTO people VALUES FROM (6, "Bill", 25, "crew", ("Spiderman", "Batman"))
 
+UPDATE Bob SET age = 7
+
 SHOW people
 SHOW movies
 

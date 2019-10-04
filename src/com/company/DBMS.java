@@ -108,11 +108,33 @@ public class DBMS {
         int i;
 
         for (i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getName().equals(name));
-            break;
+            if (movies.get(i).getName().equals(name))
+                break;
         }
 
         return movies.get(i);
+    }
+
+    public static boolean inMovies (String name) {
+        int i;
+
+        for (i = 0; i < movies.size(); i++) {
+            if (movies.get(i).getName().equals(name))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean inPeople (String name) {
+        int i;
+
+        for (i = 0; i < people.size(); i++) {
+            if (people.get(i).getName().equals(name));
+            return true;
+        }
+
+        return false;
     }
 
     public static ArrayList<Movie> getMoviesByName(String name) {
@@ -377,46 +399,53 @@ public class DBMS {
                 break;
 
             case ("UPDATE"):
+                System.out.println(terminalNodes);
                 String attribute = terminalNodes.get(3);
-                if (terminalNodes.get(1).equals("movies")) {
+
+                if (inMovies(terminalNodes.get(1))) {
 
                     switch (attribute) {
 
                         case ("id"):
+                            getMovieByName(terminalNodes.get(1)).setId(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
                         case ("name"):
+                            getMovieByName(terminalNodes.get(1)).setName(terminalNodes.get(5));
                             break;
 
                         case ("year"):
+                            getMovieByName(terminalNodes.get(1)).setYear(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
                         case ("genre"):
+                            getMovieByName(terminalNodes.get(1)).setGenre(terminalNodes.get(5));
                             break;
 
-                        case ("cast and crew"):
+                        default:
+                            System.out.println("Error: Unrecognized movie attribute");
                             break;
-
                     }
 
 
-                } else if (terminalNodes.get(1).equals("people")) {
+                } else if (inPeople((terminalNodes.get(1)))) {
 
                     switch (attribute) {
 
                         case ("id"):
+                            getPersonByName(terminalNodes.get(1)).setId(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
                         case ("name"):
+                            getPersonByName(terminalNodes.get(1)).setName(terminalNodes.get(5));
                             break;
 
                         case ("age"):
+                            getPersonByName(terminalNodes.get(1)).setAge(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
-                        case ("movies"):
-                            break;
-
-                            //case ()
+                        default:
+                            System.out.println("Error: Unrecognized person attribute");
 
                     }
 
@@ -424,7 +453,6 @@ public class DBMS {
                     System.out.println("Error: Unrecognized table");
                 }
                 break;
-
             case ("INSERT INTO"):
 
                 // This is gonna suck to make
@@ -432,7 +460,7 @@ public class DBMS {
                     ArrayList<Person> tempList = new ArrayList<>();
 
                     // Loops through parameter list and adds movie item to list inside person
-                    for (int i = 9; i < terminalNodes.size() - 2; i++) {
+                    for (int i = 8; i < terminalNodes.size() - 2; i++) {
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
 
