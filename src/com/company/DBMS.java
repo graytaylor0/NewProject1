@@ -1,14 +1,13 @@
 package com.company;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBMS {
-
     public static ArrayList<Table> tables = new ArrayList<Table>();
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
     public static ArrayList<Person> people = new ArrayList<Person>();
@@ -33,6 +32,8 @@ public class DBMS {
         } else if (type == "people"){
             people = new ArrayList<Person>();
         }
+
+
     }
 
     public static boolean compareTo(String operator, int num1, int num2) {
@@ -50,10 +51,6 @@ public class DBMS {
             return num1 <= num2;
         }
         return false;
-    }
-
-    public static void addTable (Table table) {
-        tables.add(table);
     }
 
     public static void addMovie(Movie movie){
@@ -112,11 +109,33 @@ public class DBMS {
         int i;
 
         for (i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getName().equals(name));
-            break;
+            if (movies.get(i).getName().equals(name))
+                break;
         }
 
         return movies.get(i);
+    }
+
+    public static boolean inMovies (String name) {
+        int i;
+
+        for (i = 0; i < movies.size(); i++) {
+            if (movies.get(i).getName().equals(name))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean inPeople (String name) {
+        int i;
+
+        for (i = 0; i < people.size(); i++) {
+            if (people.get(i).getName().equals(name));
+            return true;
+        }
+
+        return false;
     }
 
     public static ArrayList<Movie> getMoviesByName(String name) {
@@ -374,15 +393,14 @@ public class DBMS {
                 break;
 
             case ("CREATE TABLE"):
-                Table newTable = new Table();
-                newTable.createTable(terminalNodes);
-                addTable(newTable);
+                Table myTable = new Table();
+                tables.add(myTable.createTable(DBMS.terminalNodes));
                 break;
 
             case ("UPDATE"):
-                System.out.println(terminalNodes);
                 String attribute = terminalNodes.get(3);
-                if (movies.contains(getMovieByName(terminalNodes.get(1)))) {
+
+                if (inMovies(terminalNodes.get(1))) {
 
                     switch (attribute) {
 
@@ -403,12 +421,12 @@ public class DBMS {
                             break;
 
                         default:
-                            System.out.println("Error: Unrecognized attribute");
+                            System.out.println("Error: Unrecognized movie attribute");
                             break;
                     }
 
 
-                } else if (people.contains(getPeopleByName(terminalNodes.get(1)))) {
+                } else if (inPeople((terminalNodes.get(1)))) {
 
                     switch (attribute) {
 
@@ -424,27 +442,29 @@ public class DBMS {
                             getPersonByName(terminalNodes.get(1)).setAge(Integer.parseInt(terminalNodes.get(5)));
                             break;
 
+                        default:
+                            System.out.println("Error: Unrecognized person attribute");
+
                     }
 
                 } else {
                     System.out.println("Error: Unrecognized table");
                 }
                 break;
-
             case ("INSERT INTO"):
 
                 // This is gonna suck to make
                 if (terminalNodes.get(1).equals("movies")) {
                     ArrayList<Person> tempList = new ArrayList<>();
 
-                    // Loops through parameter list and adds person item to list inside movie
+                    // Loops through parameter list and adds movie item to list inside person
                     for (int i = 8; i < terminalNodes.size() - 2; i++) {
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
 
                     // Big boi insert
-
                     addMovie(new Movie(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+
                 } else if (terminalNodes.get(1).equals("people")) {
                     ArrayList<Movie> tempList = new ArrayList<>();  // For movies
 
@@ -472,11 +492,39 @@ public class DBMS {
                     System.out.print("Error: Unrecognized table");
                 }
                 break;
-
             case ("DELETE FROM"):
-                // Once table class is made, place access using terminalNodes.get(1) here
-                break;
+                if (terminalNodes.get(1).equals("movies")) {
+                    ArrayList<Object> tempList = QueryCommands.performOperationOnTerminalNodes(terminalNodes.get(3), terminalNodes.get(4), terminalNodes.get(5), "movies");
+                    ArrayList<Movie> tempList2 = new ArrayList<Movie>();
 
+
+                    for (int i = 0; i < tempList.size(); i++) {
+                        tempList2.add((Movie) tempList.get(1));
+                    }
+
+                    for (int i = 0; i < tempList2.size(); i ++) {
+                        if (inMovies(tempList2.get(i).getName()))
+                            movies.remove(i);
+                    }
+
+                } else if (terminalNodes.get(1).equals("people")) {
+                    ArrayList<Object> tempList = QueryCommands.performOperationOnTerminalNodes(terminalNodes.get(3), terminalNodes.get(4), terminalNodes.get(5), "people");
+                    ArrayList<Person> tempList2 = new ArrayList<Person>();
+
+
+                    for (int i = 0; i < tempList.size(); i++) {
+                        tempList2.add((Person) tempList.get(i));
+                    }
+
+                    for (int i = 0; i < tempList2.size(); i ++) {
+                        if (inPeople(tempList2.get(i).getName()))
+                            people.remove(i);
+                    }
+
+                } else {
+                    System.out.println("Error: Unrecognized table");
+                }
+                break;
             default:
                 System.out.println("Error: Unrecognized command entered");
                 break;

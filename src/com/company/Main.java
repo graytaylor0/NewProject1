@@ -22,12 +22,6 @@ public class Main {
             String line = scanner.nextLine();
             if (line.length() != 0) { lines.add(line); }
         }
-        /*
-        DBMS.movies.add(new Movie(0, "Spiderman", 2002, "Action", new ArrayList<Person>()));
-        DBMS.movies.add(new Movie(1, "Batman", 2008, "Action", new ArrayList<Person>()));
-        DBMS.movies.add(new Movie(2, "The Shining", 1980, "Horror", new ArrayList<Person>()));
-        DBMS.movies.add(new Movie(3, "Superman", 2006, "Comedy", new ArrayList<Person>()));
-        */
 
         for (String line : lines) {
             CharStream charStream = CharStreams.fromString(line);
@@ -43,19 +37,17 @@ public class Main {
 
             // Action happens
             if(DBMS.terminalNodes.contains("<-")) {
-                //System.out.println(DBMS.terminalNodes);
+
                 String type = DBMS.terminalNodes.remove(DBMS.terminalNodes.size() - 1);
                 DBMS.terminalNodes = DBMS.postfix(DBMS.terminalNodes);
-                //System.out.println(DBMS.terminalNodes);
                 QueryCommands.processQuery(DBMS.terminalNodes, type);
-                //System.out.println(DBMS.terminalNodes);
+
             } else {
 
                 DBMS.processCommand(DBMS.terminalNodes.get(0));
             }
-            //System.out.println(DBMS.terminalNodes);
-            DBMS.terminalNodes.clear();
 
+            DBMS.terminalNodes.clear();
         }
     }
 }

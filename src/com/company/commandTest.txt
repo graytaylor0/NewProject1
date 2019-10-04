@@ -6,8 +6,10 @@ INSERT INTO movies VALUES FROM (3, "Joker", 2019, "horror" ("r", "k"))
 INSERT INTO people VALUES FROM (4, "Bob", 23, "cast", ("Spiderman", "Batman"))
 INSERT INTO people VALUES FROM (6, "Bill", 23, "crew", ("Spiderman", "Batman"))
 
+SHOW movies
 SHOW people
 
 UPDATE Bob SET age = 7
+DELETE FROM movies WHERE year < 2008
 
-Show people
+SHOW movies
