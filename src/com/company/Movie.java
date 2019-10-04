@@ -1,8 +1,7 @@
 package com.company;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+//Movie object methods and members
 public class Movie {
     private int id;
     private String name;
@@ -79,6 +78,6 @@ public class Movie {
     }
     @Override
     public String toString(){
-        return "Id: " + id + ", Name: " + name + ", Year: " + year + ", Genre: " + genre;
+        return "Id: " + id + ", Name: " + name + ", Year: " + year + ", Genre: " + genre + " Cast: " + cast_and_crew;
     }
 }

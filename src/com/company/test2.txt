@@ -1,0 +1,19 @@
+INSERT INTO movies VALUES FROM (0, "The Shining", 2002, "Horror" ("Taylor", "Nick"))
+INSERT INTO movies VALUES FROM (1, "The Big Green", 1999, "Comedy" ("Tay", "Ni"))
+INSERT INTO movies VALUES FROM (2, "Superman", 2004, "action" ("T", "N"))
+INSERT INTO movies VALUES FROM (3, "Joker", 2019, "horror" ("r", "k"))
+
+INSERT INTO people VALUES FROM (4, "Bob", 23, "cast", ("Spiderman", "Batman"))
+INSERT INTO people VALUES FROM (6, "Bill", 23, "crew", ("Spiderman", "Batman"))
+
+SHOW movies
+SHOW people
+
+UPDATE Bob SET age = 7
+DELETE FROM movies WHERE year < 2008
+
+b <- select (year > 2005 && genre == "drama") movies;
+c <- select (genre == "drama") movies;
+SHOW movies
+SHOW b
+SHOW c

@@ -23,11 +23,7 @@ public class Main {
             if (line.length() != 0) { lines.add(line); }
         }
 
-        /*DBMS.movies.add(new Movie(0, "Spiderman", 2002, "Action", new ArrayList<Person>()));
-        DBMS.movies.add(new Movie(1, "Batman", 2008, "Action", new ArrayList<Person>()));
-        DBMS.movies.add(new Movie(2, "The Shining", 1980, "Horror", new ArrayList<Person>()));
-        DBMS.movies.add(new Movie(3, "Superman", 2006, "Comedy", new ArrayList<Person>()));
-        */
+
 
 
         for (String line : lines) {
@@ -43,18 +39,19 @@ public class Main {
             walker.walk(listener, programContext);
 
             // Action happens
+            //determine if it is a query or command
             if(DBMS.terminalNodes.contains("<-")) {
-                //System.out.println(DBMS.terminalNodes);
+
                 String type = DBMS.terminalNodes.remove(DBMS.terminalNodes.size() - 1);
                 DBMS.terminalNodes = DBMS.postfix(DBMS.terminalNodes);
-                //System.out.println(DBMS.terminalNodes);
+
                 QueryCommands.processQuery(DBMS.terminalNodes, type);
-                //System.out.println(DBMS.terminalNodes);
+
             } else {
-                //System.out.println(DBMS.terminalNodes);
+
                 DBMS.processCommand(DBMS.terminalNodes.get(0));
             }
-            //System.out.println(DBMS.terminalNodes);
+
             DBMS.terminalNodes.clear();
 
         }

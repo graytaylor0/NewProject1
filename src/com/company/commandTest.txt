@@ -1,18 +1,20 @@
-CREATE TABLE mymovies (name VARCHAR(20), year (INTEGER), genre VARCHAR(8));
-
-INSERT INTO movies VALUES FROM (0, "Spiderman", 2002, "comedy" ("Taylor", "Nick"))
-INSERT INTO movies VALUES FROM (1, "Batman", 2008, ("Tay", "Ni"))
-INSERT INTO movies VALUES FROM (2, "Superman", 2004, ("T", "N"))
-INSERT INTO movies VALUES FROM (3, "Joker", 2019, ("r", "k"))
-
 INSERT INTO people VALUES FROM (4, "Bob", 23, "cast", ("Spiderman", "Batman"))
-INSERT INTO people VALUES FROM (6, "Bill", 25, "crew", ("Spiderman", "Batman"))
+INSERT INTO people VALUES FROM (6, "Bill", 23, "crew", ("Spiderman", "Batman"))
+
+INSERT INTO movies VALUES FROM (0, "Spiderman", 2002, "comedy" ("Bob", "Bill"))
+INSERT INTO movies VALUES FROM (1, "Batman", 2008, "drama" ("Tay", "Ni"))
+INSERT INTO movies VALUES FROM (2, "Superman", 2004, "action" ("T", "N"))
+INSERT INTO movies VALUES FROM (3, "Joker", 2019, "horror" ("r", "k"))
+
+
+SHOW movies
+SHOW people
 
 UPDATE Bob SET age = 7
+DELETE FROM movies WHERE year < 2008
 
-SHOW people
+b <- select (year > 2005 && genre == "drama") movies;
+c <- select (genre == "drama") movies;
 SHOW movies
-
-b <- select ( name == "Superman" || name == "Batman" ) movies;
-c <- select (age > 23) people
-
+SHOW b
+SHOW c

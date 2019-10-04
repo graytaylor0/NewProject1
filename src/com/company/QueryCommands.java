@@ -2,7 +2,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class QueryCommands {
-    public static void processQuery(ArrayList<String> terminalNodes, String type){
+    public static ArrayList<Object> processQuery(ArrayList<String> terminalNodes, String type){
         ArrayList<ArrayList<Object>> stack = new ArrayList<ArrayList<Object>>();
         int terminal_node_length = terminalNodes.size();
         String command = terminalNodes.get(2);
@@ -25,14 +25,16 @@ public class QueryCommands {
         //System.out.println(stack);
 
         if (command.equals("select")){
-            //return stack[0]
-            System.out.println(stack.get(0));
-        }else if (command.equals("project")){
-            // loop through stack of 0 and get the attributes specified
-
+            if(type.equals("movies")) {
+                DBMS.personBranchMap.put(terminalNodes.get(0), stack.get(0));
+            }
+            return stack.get(0);
+            //System.out.println(stack.get(0));
         }
+        return stack.get(0);
     }
 
+    //takes type   (movie or person)  and operators w/ operand and performs desired operation from input
     public static ArrayList<Object> performOperationOnTerminalNodes(String operand1, String operator, String operand2, String type){
         ArrayList<Object> retval = new ArrayList<Object>();
         if (operand1.equals("id")){
@@ -69,6 +71,7 @@ public class QueryCommands {
         return new ArrayList<Object>();
     }
 
+    //helper method to perform operations on stack members
     public static ArrayList<Object> performOperationFromStack(ArrayList<Object> operand1, String operator, ArrayList<Object> operand2){
         ArrayList<Object> retval =  new ArrayList<Object>();
         listMethods lm = new listMethods();

@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 
+//abstraction for people for easier access and calling
 public class CrewMember extends Person {
     private String job;
 
