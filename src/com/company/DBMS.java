@@ -281,7 +281,7 @@ public class DBMS {
             out = new FileWriter(name);
 
             for (int i = 0; i < data.size(); i++){
-                out.write((char[]) data.get(i));    // kind of hacky, the cast isn't necessary except to get it to compile
+                out.write(data.get(i).toString());    // kind of hacky, the cast isn't necessary except to get it to compile
             }
 
         } catch (IOException e) {

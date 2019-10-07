@@ -7,6 +7,9 @@ INSERT INTO movies VALUES FROM (2, "Superman", 2004, "action" ("T", "N"))
 INSERT INTO movies VALUES FROM (3, "Joker", 2019, "horror" ("r", "k"))
 
 
+WRITE people
+WRITE movies
+
 SHOW movies
 SHOW people
 
