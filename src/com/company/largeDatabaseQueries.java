@@ -11,6 +11,7 @@ public class largeDatabaseQueries {
     public ArrayList<Person> constellationOfCoStars(Person actor, int constellation)
     {
         ArrayList<Person> tempList = new ArrayList<Person>();
+
         for(Movie m : DBMS.movies)
         {
             if(m.getCast_and_crew().contains(actor))
@@ -18,11 +19,13 @@ public class largeDatabaseQueries {
         }
         ArrayList<Person> retList = new ArrayList<Person>();
         for(Person p : tempList) {
-            int occur = Collections.frequency(tempList, p);
-            if(occur == constellation)
-            {
-                retList.add(p);
-                tempList.remove(p);
+            if(!p.equals(actor)) {
+                int occur = Collections.frequency(tempList, p);
+                if (occur == constellation) {
+                    if (retList.contains(p))
+                        retList.add(p);
+                    //tempList.remove(p);
+                }
             }
 
         }

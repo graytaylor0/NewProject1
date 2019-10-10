@@ -10,7 +10,7 @@ public class DBMS {
     public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
     public static Map<String, ArrayList<Object>> personBranchMap = new HashMap<String, ArrayList<Object>>();
-    public static Map<String, ArrayList<Movie>> movieBranchMap = new HashMap<String, ArrayList<Movie>>();
+    public static Map<String, Person> nameMap = new HashMap<String, Person>();
     public static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
         put("<", 9);
         put("<=", 9);
@@ -221,14 +221,7 @@ public class DBMS {
     }
 
     public static Person getPersonByName (String name) {
-        int i;
-
-        for (i = 0; i < people.size(); i++) {
-            if (people.get(i).getName().equals(name));
-            break;
-        }
-
-        return people.get(i);
+        return nameMap.get(name);
     }
 
     public static void removePeopleByName(String name) {
@@ -467,7 +460,8 @@ public class DBMS {
 
                     // Loops through parameter list and adds movie item to list inside person
                     for (int i = 8; i < terminalNodes.size(); i++) {
-
+                        //System.out.println((getPersonByName(terminalNodes.get(i))));
+                        //if(people.contains(terminalNodes.get(i)))
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
 
@@ -489,7 +483,10 @@ public class DBMS {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
-                        addPerson(new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
+
+                        Person t = new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList);
+                        nameMap.put(terminalNodes.get(5),t);
+                        addPerson(t);
 
                     } else if (terminalNodes.get(7).equals("\"cast\"")) {
 
@@ -498,8 +495,11 @@ public class DBMS {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
-                        addPerson(new CastMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
-                    } else {
+
+                        Person t = new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList);
+                        nameMap.put(terminalNodes.get(5),t);
+                        addPerson(t);                    }
+                    else {
                         System.out.println("Error: Unrecognized job");
                     }
                 } else {
