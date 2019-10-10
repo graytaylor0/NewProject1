@@ -2,16 +2,15 @@ package com.company;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DBMS {
     public static ArrayList<Table> tables = new ArrayList<Table>();
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
     public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
+    public static Map<String, ArrayList<Object>> personBranchMap = new HashMap<String, ArrayList<Object>>();
+    public static Map<String, ArrayList<Movie>> movieBranchMap = new HashMap<String, ArrayList<Movie>>();
     public static Map<String, Integer> precMap = new HashMap<String, Integer>() {{
         put("<", 9);
         put("<=", 9);
@@ -54,11 +53,15 @@ public class DBMS {
     }
 
     public static void addMovie(Movie movie){
-        movies.add(movie);
+        if(!movies.contains(movie))
+            movies.add(movie);
+        System.out.println("Movies: " + movies);
     }
 
     public static void addPerson(Person person){
-        people.add(person);
+        if(!people.contains(person))
+            people.add(person);
+        System.out.println("People: " + people);
     }
 
     //Get and remove movies
@@ -107,6 +110,9 @@ public class DBMS {
     public static Movie getMovieByName (String name) {
 
         int i;
+
+        if (movies.size() == 0)
+            return new Movie();
 
         for (i = 0; i < movies.size(); i++) {
             if (movies.get(i).getName().equals(name))
@@ -277,7 +283,7 @@ public class DBMS {
             out = new FileWriter(name);
 
             for (int i = 0; i < data.size(); i++){
-                out.write((char[]) data.get(i));    // kind of hacky, the cast isn't necessary except to get it to compile
+                out.write(data.get(i).toString());    // kind of hacky, the cast isn't necessary except to get it to compile
             }
 
         } catch (IOException e) {
@@ -386,7 +392,11 @@ public class DBMS {
                     showMovies();
                 } else if (terminalNodes.get(1).equals("people")) {
                     showPeople();
-                } else {
+                } else if(personBranchMap.containsKey(terminalNodes.get(1))){
+                    System.out.println(personBranchMap.get(terminalNodes.get(1)));
+                }
+                else
+                {
                     System.out.println("Error: Attempting to show invalid paramater");
                 }
 
@@ -458,11 +468,18 @@ public class DBMS {
                     ArrayList<Person> tempList = new ArrayList<>();
 
                     // Loops through parameter list and adds movie item to list inside person
-                    for (int i = 8; i < terminalNodes.size() - 2; i++) {
+                    for (int i = 8; i < terminalNodes.size(); i++) {
+
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
+                    System.out.println("Terminal Nodes: " + terminalNodes);
 
                     // Big boi insert
+                    Set<Person> set = new HashSet<Person>(tempList);
+                    tempList.clear();
+                    tempList.addAll(set);
+
+
                     addMovie(new Movie(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
 
                 } else if (terminalNodes.get(1).equals("people")) {
@@ -471,7 +488,7 @@ public class DBMS {
                     if (terminalNodes.get(7).equals("\"crew\"")) {      // change this to dictionary for roles
 
                         // Loops through parameter list and adds movie item to list inside person
-                        for (int i = 8; i < terminalNodes.size() - 1; i++) {
+                        for (int i = 8; i < terminalNodes.size() - 2; i++) {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
@@ -480,7 +497,7 @@ public class DBMS {
                     } else if (terminalNodes.get(7).equals("\"cast\"")) {
 
                         // Loops through parameter list and adds movie item to list inside person
-                        for (int i = 8; i < terminalNodes.size() - 1; i++) {
+                        for (int i = 8; i < terminalNodes.size(); i++) {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
                         // Big boi insert
@@ -521,7 +538,11 @@ public class DBMS {
                             people.remove(i);
                     }
 
-                } else {
+                } else if(DBMS.personBranchMap.containsKey(terminalNodes.get(1)))
+                {
+                    //new Movie(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList)
+                }
+                else {
                     System.out.println("Error: Unrecognized table");
                 }
                 break;

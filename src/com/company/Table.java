@@ -37,7 +37,7 @@ public class Table {
         int lastIndex = -1;
         String myName = list.get(nameIndex);
         name = myName;
-        Table retVal = new Table();
+        //Table retVal = new Table();
         for(int i = nameIndex; i < list.size(); i ++)
         {
             if(list.get(i).equals("(") || list.get(i).equals(")"))
@@ -45,12 +45,13 @@ public class Table {
                 list.remove(i);
             }
         }
-        for(int i = nameIndex; i < list.size() - 1; i ++)
+        lastIndex = list.size();
+        /*for(int i = nameIndex; i < list.size(); i ++)
         {
             if(list.get(i).equals("PRIMARY KEY"))
                 lastIndex = i;
 
-        }
+        }*/
         for(int i = nameIndex + 1; i < lastIndex; i += 3)
         {
             System.out.println(list);

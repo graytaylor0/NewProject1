@@ -14,6 +14,7 @@ public class MyRulesBaseListener extends rulesBaseListener {
     @Override public void exitShow_cmd(rulesParser.Show_cmdContext ctx) {
         //System.out.println("SHOW");
     }
+    //tests to understand antl4r
     //@Override public void exitOperand(rulesParser.OperandContext ctx) {DBMS.terminalNodes.add(ctx.stop.getText());}
     //@Override public void exitLiteral(rulesParser.LiteralContext ctx) {DBMS.terminalNodes.add(ctx.stop.getText());}
     //@Override public void exitRelation_name(rulesParser.Relation_nameContext ctx) {DBMS.terminalNodes.add(ctx.stop.getText());}

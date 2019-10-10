@@ -1,8 +1,7 @@
 package com.company;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+//Movie object methods and members
 public class Movie {
     private int id;
     private String name;
@@ -77,8 +76,13 @@ public class Movie {
             System.out.println(cast_and_crew.get(i));
         }
     }
+    public ArrayList<Person> getCast_and_crew()
+    {
+        return this.cast_and_crew;
+    }
+
     @Override
     public String toString(){
-        return "Id: " + id + ", Name: " + name + ", Year: " + year + ", Genre: " + genre;
+        return "Id: " + id + ", Name: " + name + ", Year: " + year + ", Genre: " + genre + " Cast: " + cast_and_crew;
     }
 }
