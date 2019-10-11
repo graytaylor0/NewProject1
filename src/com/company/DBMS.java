@@ -109,12 +109,9 @@ public class DBMS {
 
         int i;
 
-        if (movies.size() == 0)
-            return new Movie();
-
         for (i = 0; i < movies.size(); i++) {
             if (movies.get(i).getName().equals(name))
-                break;
+                return movies.get(i);
         }
 
         return movies.get(i);
@@ -456,54 +453,85 @@ public class DBMS {
 
                 // This is gonna suck to make
                 if (terminalNodes.get(1).equals("movies")) {
-                    ArrayList<Person> tempList = new ArrayList<>();
+                    ArrayList<Person> tempList = new ArrayList<Person>();
+                    for(int i = 8; i < terminalNodes.size()-1; i ++)
+                    {
 
-                    // Loops through parameter list and adds movie item to list inside person
-                    for (int i = 8; i < terminalNodes.size(); i++) {
-                        //System.out.println((getPersonByName(terminalNodes.get(i))));
-                        //if(people.contains(terminalNodes.get(i)))
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
+                    if(!inMovies(terminalNodes.get(5))) {
+                        Movie newMovie = new Movie();
+                        newMovie.setId(Integer.parseInt(terminalNodes.get(4)));
+                        newMovie.setName(terminalNodes.get(5));
+                        newMovie.setYear(Integer.parseInt(terminalNodes.get(6)));
+                        newMovie.setGenre(terminalNodes.get(7));
+                        for(Person p : tempList)
+                            newMovie.addPerson(p);
+                        movies.add(newMovie);
+                    }
+                    else
+                    {
+                        //find it myself and update
+                        for(Movie m : movies)
+                        {
+                            if(m.getName().equalsIgnoreCase(terminalNodes.get(5)))
+                            {
+                                m.setId(Integer.parseInt(terminalNodes.get(4)));
+                                m.setName(terminalNodes.get(5));
+                                m.setYear(Integer.parseInt(terminalNodes.get(6)));
+                                m.setGenre(terminalNodes.get(7));
+                            }
+                        }
+                    }
 
-                    // Big boi insert
-                    Set<Person> set = new HashSet<Person>(tempList);
-                    tempList.clear();
-                    tempList.addAll(set);
 
-
-                    addMovie(new Movie(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList));
 
                 } else if (terminalNodes.get(1).equals("people")) {
-                    ArrayList<Movie> tempList = new ArrayList<>();  // For movies
+                    if(terminalNodes.get(7).equalsIgnoreCase("\"cast\""))
+                    {
+                        ArrayList<Movie> tempList = new ArrayList<Movie>();
+                        for(int i = 8; i < terminalNodes.size()-1; i ++) {
+                            if(!inMovies(terminalNodes.get(i)))
+                            {
+                                Movie newMovie = new Movie(terminalNodes.get(i));
+                                tempList.add(newMovie);
+                                CastMember newCast = new CastMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5),Integer.parseInt(terminalNodes.get(6)), "cast", tempList);
+                                nameMap.putIfAbsent(newCast.getName(),newCast);
+                                //System.out.println(newCast.movies);
+                                people.add(newCast);
+                            }
+                            else{
+                                for(Person p : people)
+                                {
+                                    if(p.getName().equalsIgnoreCase(terminalNodes.get(5)))
+                                {
+                                    p.setId(Integer.parseInt(terminalNodes.get(4)));
+                                    p.setName(terminalNodes.get(5));
+                                    p.setAge(Integer.parseInt(terminalNodes.get(6)));
 
-                    if (terminalNodes.get(7).equals("\"crew\"")) {      // change this to dictionary for roles
-
-                        // Loops through parameter list and adds movie item to list inside person
-                        for (int i = 8; i < terminalNodes.size() - 2; i++) {
-                            tempList.add(getMovieByName(terminalNodes.get(i)));
+                                }
+                                }
+                            }
                         }
-                        // Big boi insert
 
-                        Person t = new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList);
-                        nameMap.put(terminalNodes.get(5),t);
-                        addPerson(t);
 
-                    } else if (terminalNodes.get(7).equals("\"cast\"")) {
-
-                        // Loops through parameter list and adds movie item to list inside person
-                        for (int i = 8; i < terminalNodes.size(); i++) {
-                            tempList.add(getMovieByName(terminalNodes.get(i)));
-                        }
-                        // Big boi insert
-
-                        Person t = new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5), Integer.parseInt(terminalNodes.get(6)), terminalNodes.get(7), tempList);
-                        nameMap.put(terminalNodes.get(5),t);
-                        addPerson(t);                    }
-                    else {
-                        System.out.println("Error: Unrecognized job");
                     }
-                } else {
-                    System.out.print("Error: Unrecognized table");
+                    if(terminalNodes.get(7).equalsIgnoreCase("\"crew\""))
+                    {
+                        ArrayList<Movie> tempList = new ArrayList<Movie>();
+                        for(int i = 8; i < terminalNodes.size()-1; i ++)
+                        {
+                            Movie newMovie = new Movie(terminalNodes.get(i));
+                            if(!tempList.contains(newMovie))
+                            {
+                                tempList.add(newMovie);
+                            }
+                        }
+                        CrewMember newCast = new CrewMember(Integer.parseInt(terminalNodes.get(4)), terminalNodes.get(5),Integer.parseInt(terminalNodes.get(6)), "crew", tempList);
+                        nameMap.putIfAbsent(newCast.getName(),newCast);
+                        people.add(newCast);
+
+                    }
                 }
                 break;
             case ("DELETE FROM"):

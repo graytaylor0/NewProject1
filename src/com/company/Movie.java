@@ -16,6 +16,15 @@ public class Movie {
         this.genre = "";
         cast_and_crew = new ArrayList<Person>();
     }
+    public Movie(String name)
+    {
+        this.name = name;
+        this.id = 0;
+        this.year = -1;
+        this.genre = "";
+        cast_and_crew = new ArrayList<Person>();
+    }
+
 
     public Movie(int id, String name, int year, String genre, ArrayList<Person> cast_and_crew){//, ArrayList<Person> cast_and_crew){
         this.genre = genre;
@@ -24,6 +33,7 @@ public class Movie {
         this.name = name;
         this.cast_and_crew = cast_and_crew;
     }
+
 
     public int getId() {
         return id;

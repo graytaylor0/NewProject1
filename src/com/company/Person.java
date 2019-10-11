@@ -5,6 +5,7 @@ public abstract class Person {
     protected int id;
     protected String name;
     protected int age;
+
     protected ArrayList<Movie> movies;
 
     public int getId() {
@@ -41,4 +42,12 @@ public abstract class Person {
         this.age = age;
         this.movies = movies;
     }
+    public Person(String name)
+    {
+        this.id = 0;
+        this.name = name;
+        this.age = 0;
+        this.movies = new ArrayList<Movie>();
+    }
+
 }

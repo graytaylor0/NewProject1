@@ -14,6 +14,10 @@ public class CastMember extends Person{
         super(id, name, age, movies);
         this.role = role;
     }
+    public CastMember(String name)
+    {
+        super(name);
+    }
     public String getRole(){
         return this.role;
     }

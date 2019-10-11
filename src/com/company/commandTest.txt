@@ -8,6 +8,13 @@ INSERT INTO movies VALUES FROM (3, "Joker", 2019, "horror" ,("Bob", "Bill"))
 INSERT INTO movies VALUES FROM (5, "The_Shining", 2019, "horror" ,("Bob", "Bill"))
 
 
+
+
+
+
+
+
+
 WRITE people
 WRITE movies
 
