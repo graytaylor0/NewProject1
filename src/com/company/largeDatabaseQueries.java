@@ -11,7 +11,7 @@ public class largeDatabaseQueries {
     public ArrayList<Person> constellationOfCoStars(Person actor, int constellation)
     {
         ArrayList<Person> tempList = new ArrayList<Person>();
-
+        
         for(Movie m : DBMS.movies)
         {
             if(m.getCast_and_crew().contains(actor))

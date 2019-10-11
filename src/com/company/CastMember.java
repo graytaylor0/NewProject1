@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class CastMember extends Person{
-    private String role;
+    public String role;
 
     public CastMember(){
         super();
@@ -11,7 +11,7 @@ public class CastMember extends Person{
     }
 
     public CastMember(int id, String name, int age, String role, ArrayList<Movie> movies){
-        super(id, name, age, movies);
+        //super(id, name, age, movies);
         this.role = role;
     }
     public CastMember(String name)

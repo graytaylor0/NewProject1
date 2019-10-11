@@ -1,10 +1,11 @@
 package com.company;
 import java.util.ArrayList;
 
-public abstract class Person {
+public class Person {
     protected int id;
     protected String name;
     protected int age;
+    protected String job;
 
     protected ArrayList<Movie> movies;
 
@@ -24,8 +25,15 @@ public abstract class Person {
         this.age = age;
     }
 
+    public void setJob(String j){ this.job = job; }
+
     public String getName() {
         return name;
+    }
+
+    public void addMovie(Movie m)
+    {
+        movies.add(m);
     }
 
     public void setName(String name) {
@@ -35,19 +43,33 @@ public abstract class Person {
         this.id = 0;
         this.name = "";
         this.age = 0;
+        this.job = "";
     }
-    public Person(int id, String name, int age, ArrayList<Movie> movies) {
+    public Person(int id, String name, int age, String j,ArrayList<Movie> movies) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.movies = movies;
+        this.job = j;
     }
     public Person(String name)
     {
         this.id = 0;
         this.name = name;
         this.age = 0;
+        this.job = "";
         this.movies = new ArrayList<Movie>();
     }
+    @Override
+    public String toString()
+    {
+        return "id: " + id + " name: " + name + " age: " + age + " job: " + job + " Movies: :" +  movies;
+    }
+
+    public boolean equals(Person p)
+    {
+        return this.age == p.age && this.id == p.age && this.name.equals(p.name) && this.job.equals(p.job);
+    }
+
 
 }

@@ -1,1 +1,1 @@
-Id: 4 Name: "Bob", Age: 23, Role: "cast"Id: 6 Name: "Bill", Age: 23, Job: "crew"
+id: 4 name: "Bob" age: 23 job:  Movies: :nullid: 6 name: "Bill" age: 23 job:  Movies: :null

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 //abstraction for people for easier access and calling
 public class CrewMember extends Person {
-    private String job;
+    public String job;
 
     public CrewMember(){
         super();
@@ -12,7 +12,7 @@ public class CrewMember extends Person {
     }
 
     public CrewMember(int id, String name, int age, String job, ArrayList<Movie> movies){
-        super(id, name, age, movies);
+        //super(id, name, age, movies);
         this.job = job;
     }
     public String getRole(){
