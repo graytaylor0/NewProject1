@@ -1,6 +1,11 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class HomePage extends javax.swing.JFrame {
+
+    largeDatabaseQueries LDB = new largeDatabaseQueries();
+    int commandNum = 1;
 
     public HomePage() {
         initComponents();
@@ -542,19 +547,15 @@ public class HomePage extends javax.swing.JFrame {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {
         return;
     }
-
     private void fileNameBasicField1ActionPerformed(java.awt.event.ActionEvent evt) {
         return;
     }
-
     private void personAdvancedRadioActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.personOrMovie = true;
     }
-
     private void fileNameAdvancedFieldActionPerformed(java.awt.event.ActionEvent evt) {
         return;
     }
-
     private void fileNameBasicFieldActionPerformed(java.awt.event.ActionEvent evt) {
         return;
     }
@@ -581,11 +582,26 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Basic search button
-    // TODO: Add function and output to screen, inputs handled
+    // TODO: Check for errors
     private void searchBasicActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.actorName1 = nameBasicField.getText();
         DatabaseUI.ageOrYear = (Integer) ageYearBasicSpinner.getValue();
 
+        // String hackery to trick our processQuery function to work with GUI input
+        String fakeLine = "command" + commandNum + " <- " + "select " + "name == " + DatabaseUI.actorName1 + " )";
+        String temp2;
+        if (DatabaseUI.personOrMovie)
+            temp2 = "people";
+        else
+            temp2 = "movies";
+        String[] temp = fakeLine.split(" ");
+        ArrayList<String> fakeQuery = new ArrayList<String>();
+        for(String val: temp) {
+            fakeQuery.add(val);
+        }
+
+        DatabaseUI.output = QueryCommands.processQuery(DBMS.postfix(fakeQuery), temp2).toString();
+        peopleBasicOutput.setText(DatabaseUI.output);
     }
 
     private void movieBasicRadioActionPerformed(java.awt.event.ActionEvent evt) {
@@ -604,6 +620,7 @@ public class HomePage extends javax.swing.JFrame {
         DatabaseUI.comparator = jTextField1.getText();
         DatabaseUI.operator = jComboBox2.getSelectedIndex();
         DatabaseUI.compareType = jComboBox1.getSelectedIndex();
+
     }
 
     // TODO: Add functionality
@@ -611,9 +628,10 @@ public class HomePage extends javax.swing.JFrame {
         DatabaseUI.actorName1 = actorOneField.getText();
     }
 
-    // TODO: Add functionality
+    // TODO: Add output
     private void typeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.actorName1 = actorOneField.getText();
+        DatabaseUI.output = LDB.mostOccurrencesInGenre(DBMS.getPersonByName(DatabaseUI.actorName1));
 
     }
 

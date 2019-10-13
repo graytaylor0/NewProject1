@@ -10,11 +10,10 @@ public class DatabaseUI {
     static String actorName1;
     static String actorName2;
     static String characterName;
+    static String output;
     static boolean personOrMovie = true;   // 1 is person, 0 is movie
 
     public static void main(String[] args) {
-
-
         HomePage.main(args);
     }
 
