@@ -58,7 +58,8 @@ public class Main {
         largeDatabaseQueries ldbQ = new largeDatabaseQueries();
         System.out.println("--TESTING BIG QUERY COMMANDS BELOW ON " + DBMS.people.get(0).getName() + " --");
         System.out.println(DBMS.people.get(0));
-        System.out.println(ldbQ.mostOccurrencesInGenre(DBMS.people.get(0)));
+        System.out.println(ldbQ.mostOccurrencesInGenre(DBMS.people.get(1)));
         System.out.println(ldbQ.constellationOfCoStars(DBMS.people.get(0),5));
+        System.out.println(ldbQ.bestAndWorst("Bob"));
     }
 }

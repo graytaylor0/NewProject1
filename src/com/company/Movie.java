@@ -100,6 +100,6 @@ public class Movie {
 
     @Override
     public String toString(){
-        return "Id: " + id + ", Name: " + name + ", Year: " + year + ", Genre: " + genre + " Cast: " + cast_and_crew;
+        return "Id: " + id + ", Name: " + name + ", Year: " + year + ", Genre: " + genre + ", Rating: " + (rating*10);
     }
 }

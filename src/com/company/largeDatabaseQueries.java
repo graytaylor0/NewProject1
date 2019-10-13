@@ -11,7 +11,7 @@ public class largeDatabaseQueries {
     public ArrayList<Person> constellationOfCoStars(Person actor, int constellation)
     {
         ArrayList<Person> tempList = new ArrayList<Person>();
-        
+
         for(Movie m : DBMS.movies)
         {
             if(m.getCast_and_crew().contains(actor))
@@ -19,10 +19,10 @@ public class largeDatabaseQueries {
         }
         ArrayList<Person> retList = new ArrayList<Person>();
         for(Person p : tempList) {
-            if(!p.equals(actor)) {
+            if(p != null && !p.getName().equals(actor.getName())) {
                 int occur = Collections.frequency(tempList, p);
                 if (occur == constellation) {
-                    if (retList.contains(p))
+                    if (!retList.contains(p) && !p.equals(actor))
                         retList.add(p);
                     //tempList.remove(p);
                 }
@@ -54,6 +54,55 @@ public class largeDatabaseQueries {
         }
 
         return genre;
+    }
+
+    public ArrayList<Movie> bestAndWorst(String name)
+    {
+        name = "\"" + name + "\"";
+        double max = -1;
+        Movie bestMovie = new Movie();
+        for(Movie m : DBMS.movies)
+        {
+            for(Person p : m.getCast_and_crew())
+            {
+                if(p != null && p.getName().equals(name))
+                {
+                    if(m.getRating() > max) {
+                        max = m.getRating();
+                        bestMovie = m;
+                    }
+                }
+            }
+        }
+        Person director = new Person();
+        for(Person p : bestMovie.getCast_and_crew())
+        {
+            if(p != null && p.getJob().equalsIgnoreCase("\"director\""))
+            {
+                director = p;
+            }
+        }
+
+        double min = 1000;
+        Movie worstMovie = new Movie();
+        for(Movie m : DBMS.movies)
+        {
+            for(Person p : m.getCast_and_crew())
+            {
+                if(p != null && p.getName().equals(director.getName()))
+                {
+                    if(m.getRating() < min)
+                    {
+                        min = m.getRating();
+                        worstMovie = m;
+                    }
+                }
+            }
+        }
+
+        ArrayList<Movie>retList= new ArrayList<Movie>();
+        retList.add(worstMovie);  retList.add(bestMovie);
+        return retList;
     }
 
 

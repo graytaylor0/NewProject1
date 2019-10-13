@@ -457,7 +457,8 @@ public class DBMS {
                         newMovie.setId(Integer.parseInt(terminalNodes.get(4)));
                         newMovie.setName(terminalNodes.get(5));
                         newMovie.setYear(Integer.parseInt(terminalNodes.get(6)));
-                        newMovie.setGenre(terminalNodes.get(7));
+                        newMovie.setRating(Double.parseDouble(terminalNodes.get(7)));
+                        newMovie.setGenre(terminalNodes.get(8));
                         for(Person p : tempList) {
                             newMovie.addPerson(p);
                             //moviemap.putIfAbsent(p.getName(),p);
@@ -507,7 +508,7 @@ public class DBMS {
                                 //System.out.println(newCast.movies);
 
                                 people.add(p);
-                                System.out.println(p);
+                               // System.out.println(p);
                                 nameMap.putIfAbsent(p.getName(),p);
                             }
                             else{
@@ -521,6 +522,7 @@ public class DBMS {
                                     p.setId(Integer.parseInt(terminalNodes.get(4)));
                                     p.setName(terminalNodes.get(5));
                                     p.setAge(Integer.parseInt(terminalNodes.get(6)));
+                                    p.setJob(terminalNodes.get(7));
                                     p.movies = tempList;
 
                                 }

@@ -13,6 +13,11 @@ public class Person {
         return id;
     }
 
+    public String getJob()
+    {
+        return this.job;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -25,7 +30,7 @@ public class Person {
         this.age = age;
     }
 
-    public void setJob(String j){ this.job = job; }
+    public void setJob(String j){ this.job = j; }
 
     public String getName() {
         return name;

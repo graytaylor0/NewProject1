@@ -588,13 +588,15 @@ public class HomePage extends javax.swing.JFrame {
         DatabaseUI.ageOrYear = (Integer) ageYearBasicSpinner.getValue();
 
         // String hackery to trick our processQuery function to work with GUI input
-        String fakeLine = "command" + commandNum + " <- " + "select " + "name == " + DatabaseUI.actorName1 + " )";
+        String fakeLine = "command" + commandNum + " <- " + "select " + "( name == " + "\"" + DatabaseUI.actorName1 + "\"" +" )";
+        commandNum++;
         String temp2;
         if (DatabaseUI.personOrMovie)
             temp2 = "people";
         else
             temp2 = "movies";
         String[] temp = fakeLine.split(" ");
+        System.out.println(temp.toString());
         ArrayList<String> fakeQuery = new ArrayList<String>();
         for(String val: temp) {
             fakeQuery.add(val);
