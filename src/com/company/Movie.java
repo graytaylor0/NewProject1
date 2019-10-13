@@ -7,6 +7,7 @@ public class Movie {
     private String name;
     private int year;
     private String genre;
+    private double rating;
     private ArrayList<Person> cast_and_crew;
 
     public Movie(){
@@ -14,6 +15,7 @@ public class Movie {
         this.name = "";
         this.year = 0;
         this.genre = "";
+        this.rating = 0.0;
         cast_and_crew = new ArrayList<Person>();
     }
     public Movie(String name)
@@ -22,6 +24,7 @@ public class Movie {
         this.id = 0;
         this.year = -1;
         this.genre = "";
+        this.rating = 0.0;
         cast_and_crew = new ArrayList<Person>();
     }
 
@@ -38,6 +41,10 @@ public class Movie {
     public int getId() {
         return id;
     }
+
+    public double getRating() { return this.rating;}
+
+    public void setRating(double d) {this.rating = d;}
 
     public String getGenre(){
         return this.genre;
