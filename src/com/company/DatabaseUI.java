@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class DatabaseUI {
     static int ageOrYear = 0;
     static String comparator;
-    static int compareType = 0;
-    static int operator = 0;
+    static String compareType;
+    static String operator;
     static String genre;
     static String fileName;
     static String actorName1;

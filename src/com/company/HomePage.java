@@ -689,7 +689,7 @@ public class HomePage extends javax.swing.JFrame {
         actorName1 = nameAdvancedField.getText();
         DatabaseUI.ageOrYear = (Integer) ageYearAdvancedSpinner.getValue();
         DatabaseUI.comparator = jTextField1.getText();
-        DatabaseUI.operator = jComboBox2.getSelectedIndex();
+        System.out.println(jComboBox2.getSelectedItem().toString());
         DatabaseUI.compareType = jComboBox1.getSelectedIndex();
 
     }
