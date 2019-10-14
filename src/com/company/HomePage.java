@@ -640,7 +640,6 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Basic search button
-    // TODO: Check for errors
     private void searchBasicActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.actorName1 = nameBasicField.getText();
         DatabaseUI.ageOrYear = (Integer) ageYearBasicSpinner.getValue();
@@ -661,6 +660,9 @@ public class HomePage extends javax.swing.JFrame {
             fakeLine.replace("age", "year");
             temp2 = "movies";
         }
+
+        System.out.println(DatabaseUI.personOrMovie);
+
         String[] temp = fakeLine.split(" ");
         ArrayList<String> fakeQuery = new ArrayList<String>();
         for(String val: temp) {
@@ -672,7 +674,7 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     private void movieBasicRadioActionPerformed(java.awt.event.ActionEvent evt) {
-        DatabaseUI.personOrMovie = true;
+        DatabaseUI.personOrMovie = false;
     }
 
     private void movieAdvancedRadioActionPerformed(java.awt.event.ActionEvent evt) {
