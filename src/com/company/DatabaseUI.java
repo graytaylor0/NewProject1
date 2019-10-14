@@ -23,7 +23,7 @@ public class DatabaseUI {
     static String fileName;
     static String actorName1;
     static String actorName2;
-    static String characterName;
+    static int constellationNum;
     static String output;
     static boolean personOrMovie = true;   // 1 is person, 0 is movie
 

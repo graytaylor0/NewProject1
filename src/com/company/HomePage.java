@@ -1,8 +1,12 @@
 package com.company;
 
+import javax.xml.crypto.Data;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.company.DatabaseUI.actorName1;
+import static com.company.DatabaseUI.constellationNum;
 
 public class HomePage extends javax.swing.JFrame {
 
@@ -64,10 +68,10 @@ public class HomePage extends javax.swing.JFrame {
         peopleBasicOutput1 = new javax.swing.JTextPane();
         writeBasic1 = new javax.swing.JButton();
         fileNameBasicField1 = new javax.swing.JTextField();
-        coverButton = new javax.swing.JButton();
+        constButton = new javax.swing.JButton();
         bestWorstButton = new javax.swing.JButton();
         typeButton = new javax.swing.JButton();
-        characterField = new javax.swing.JTextField();
+        constSpinner = new javax.swing.JSpinner();
         nameBasicLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -443,10 +447,10 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        coverButton.setText("Cover Roles");
-        coverButton.addActionListener(new java.awt.event.ActionListener() {
+        constButton.setText("Constellation of Co-Stars");
+        constButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coverButtonActionPerformed(evt);
+                constButtonActionPerformed(evt);
             }
         });
 
@@ -464,9 +468,7 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        characterField.setText("Enter name here...");
-
-        nameBasicLabel4.setText("Character (optional)");
+        nameBasicLabel4.setText("Number of Co-Star Appearances");
 
         javax.swing.GroupLayout baconNumPanelLayout = new javax.swing.GroupLayout(baconNumPanel);
         baconNumPanel.setLayout(baconNumPanelLayout);
@@ -488,8 +490,8 @@ public class HomePage extends javax.swing.JFrame {
                                                         .addComponent(bestWorstButton))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(baconNumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(coverButton)
-                                                        .addComponent(characterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(constButton)
+                                                        .addComponent(constSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(nameBasicLabel4))
                                                 .addGap(463, 463, 463))
                                         .addGroup(baconNumPanelLayout.createSequentialGroup()
@@ -510,10 +512,10 @@ public class HomePage extends javax.swing.JFrame {
                                                         .addComponent(nameBasicLabel4)
                                                         .addComponent(actorLabel1))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(characterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(constSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(44, 44, 44)
                                                 .addGroup(baconNumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(coverButton)
+                                                        .addComponent(constButton)
                                                         .addComponent(bestWorstButton))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(typeButton)
@@ -641,11 +643,11 @@ public class HomePage extends javax.swing.JFrame {
 
     // Basic search button
     private void searchBasicActionPerformed(java.awt.event.ActionEvent evt) {
-        DatabaseUI.actorName1 = nameBasicField.getText();
+        actorName1 = nameBasicField.getText();
         DatabaseUI.ageOrYear = (Integer) ageYearBasicSpinner.getValue();
 
         // String hackery to trick our processQuery function to work with GUI input
-        String fakeLine = "command" + commandNum + " <- " + "select " + "( name == " + "\"" + DatabaseUI.actorName1 + "\"";
+        String fakeLine = "command" + commandNum + " <- " + "select " + "( name == " + "\"" + actorName1 + "\"";
         String temp2;
 
         if (DatabaseUI.ageOrYear > 0)
@@ -684,7 +686,7 @@ public class HomePage extends javax.swing.JFrame {
     // Advanced search button
     // TODO: Add function and output to screen, inputs handled
     private void searchAdvancedActionPerformed(java.awt.event.ActionEvent evt) {
-        DatabaseUI.actorName1 = nameAdvancedField.getText();
+        actorName1 = nameAdvancedField.getText();
         DatabaseUI.ageOrYear = (Integer) ageYearAdvancedSpinner.getValue();
         DatabaseUI.comparator = jTextField1.getText();
         DatabaseUI.operator = jComboBox2.getSelectedIndex();
@@ -692,21 +694,26 @@ public class HomePage extends javax.swing.JFrame {
 
     }
 
-    // TODO: Add functionality
+    // This function performs Best of Days
     private void bestWorstButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        DatabaseUI.actorName1 = actorOneField.getText();
+        actorName1 = actorOneField.getText();
+        DatabaseUI.output = LDB.bestAndWorst(actorName1).toString();
+        peopleBasicOutput1.setText(DatabaseUI.output);
     }
 
-    // TODO: Add output
+    // This function performs typecasting
     private void typeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        DatabaseUI.actorName1 = actorOneField.getText();
-        DatabaseUI.output = LDB.mostOccurrencesInGenre(DBMS.getPersonByName(DatabaseUI.actorName1));
-
+        actorName1 = actorOneField.getText();
+        DatabaseUI.output = LDB.mostOccurrencesInGenre(DBMS.getPersonByName(actorName1));
+        peopleBasicOutput1.setText(DatabaseUI.output);
     }
 
-    // TODO: Add functionality
-    private void coverButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        DatabaseUI.characterName = characterField.getText();
+    // This function performs the constellation of co-stars
+    private void constButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        DatabaseUI.constellationNum = (Integer) constSpinner.getValue();
+        DatabaseUI.actorName1 = "\"" + actorOneField.getText() + "\"";
+        DatabaseUI.output = LDB.constellationOfCoStars(DBMS.getPersonByName(DatabaseUI.actorName1), constellationNum).toString();
+        peopleBasicOutput1.setText(DatabaseUI.output);
     }
 
 
@@ -753,9 +760,9 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel baconNumPanel;
     private javax.swing.JPanel basicSearchPanel;
     private javax.swing.JButton bestWorstButton;
-    private javax.swing.JTextField characterField;
+    private javax.swing.JSpinner constSpinner;
     private javax.swing.JTabbedPane commandSelect;
-    private javax.swing.JButton coverButton;
+    private javax.swing.JButton constButton;
     private javax.swing.JTabbedPane displayAdvanced;
     private javax.swing.JTabbedPane displayBasic;
     private javax.swing.JTabbedPane displayBasic1;
