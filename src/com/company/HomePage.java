@@ -5,8 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.company.DatabaseUI.actorName1;
-import static com.company.DatabaseUI.constellationNum;
+import static com.company.DatabaseUI.*;
 
 public class HomePage extends javax.swing.JFrame {
 
@@ -663,8 +662,6 @@ public class HomePage extends javax.swing.JFrame {
             temp2 = "movies";
         }
 
-        System.out.println(DatabaseUI.personOrMovie);
-
         String[] temp = fakeLine.split(" ");
         ArrayList<String> fakeQuery = new ArrayList<String>();
         for(String val: temp) {
@@ -689,8 +686,37 @@ public class HomePage extends javax.swing.JFrame {
         actorName1 = nameAdvancedField.getText();
         DatabaseUI.ageOrYear = (Integer) ageYearAdvancedSpinner.getValue();
         DatabaseUI.comparator = jTextField1.getText();
-        System.out.println(jComboBox2.getSelectedItem().toString());
-        DatabaseUI.compareType = jComboBox1.getSelectedIndex();
+        DatabaseUI.operator = jComboBox2.getSelectedItem().toString();
+        DatabaseUI.compareType = jComboBox1.getSelectedItem().toString().toLowerCase();
+
+        // String hackery to trick our processQuery function to work with GUI input
+        String fakeLine = "command" + commandNum + " <- " + "select " + "( name == " + "\"" + actorName1 + "\"";
+        String temp2;
+
+        if (DatabaseUI.ageOrYear > 0)
+            fakeLine += " && age == " + DatabaseUI.ageOrYear;
+
+        if (DatabaseUI.personOrMovie) {
+            temp2 = "people";
+        }
+        else {
+            fakeLine.replace("age", "year");
+            temp2 = "movies";
+        }
+
+        if (!compareType.equals("Year") || !compareType.equals("Age"))
+            comparator = "\"" + comparator + "\"";
+
+        fakeLine += " && " + DatabaseUI.compareType + " " + DatabaseUI.operator + " " + DatabaseUI.comparator + " )";
+
+        String[] temp = fakeLine.split(" ");
+        ArrayList<String> fakeQuery = new ArrayList<String>();
+        for(String val: temp) {
+            fakeQuery.add(val);
+        }
+
+        DatabaseUI.output = QueryCommands.processQuery(DBMS.postfix(fakeQuery), temp2).toString();
+        peopleBasicOutput2.setText(DatabaseUI.output);
 
     }
 
