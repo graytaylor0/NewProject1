@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HomePage extends javax.swing.JFrame {
@@ -568,17 +570,73 @@ public class HomePage extends javax.swing.JFrame {
     // Write to file for Basic Search
     private void writeBasicActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.fileName = fileNameBasicField.getText();
+
+        FileWriter out = null;
+
+        try {
+            out = new FileWriter(DatabaseUI.fileName);
+
+            out.write(DatabaseUI.output);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Write to file for Advanced Search
     private void writeAdvancedActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.fileName = fileNameAdvancedField.getText();
-        System.out.println(DatabaseUI.fileName);
+
+        FileWriter out = null;
+
+        try {
+            out = new FileWriter(DatabaseUI.fileName);
+
+            out.write(DatabaseUI.output);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Write to file for Advanced uery
     private void writeBasic1ActionPerformed(java.awt.event.ActionEvent evt) {
         DatabaseUI.fileName = fileNameBasicField1.getText();
+
+        FileWriter out = null;
+
+        try {
+            out = new FileWriter(DatabaseUI.fileName);
+
+            out.write(DatabaseUI.output);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Basic search button
@@ -588,11 +646,13 @@ public class HomePage extends javax.swing.JFrame {
         DatabaseUI.ageOrYear = (Integer) ageYearBasicSpinner.getValue();
 
         // String hackery to trick our processQuery function to work with GUI input
-        String fakeLine = "command" + commandNum + " <- " + "select " + "name == " + DatabaseUI.actorName1;
+        String fakeLine = "command" + commandNum + " <- " + "select " + "( name == " + "\"" + DatabaseUI.actorName1 + "\"";
         String temp2;
 
         if (DatabaseUI.ageOrYear > 0)
             fakeLine += " && age == " + DatabaseUI.ageOrYear + " )";
+        else
+            fakeLine += " )";
 
         if (DatabaseUI.personOrMovie) {
             temp2 = "people";
