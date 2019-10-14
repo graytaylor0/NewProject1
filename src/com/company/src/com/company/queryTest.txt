@@ -1,1 +1,0 @@
-b <- select ( genre == Horror || genre == Action && year == 1980 || name == Superman ) movies;
