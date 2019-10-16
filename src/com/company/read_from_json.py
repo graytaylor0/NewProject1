@@ -10,6 +10,10 @@ peopleToMovies = dict()
 movies = []
 count = 0
 swappedCount = 0
+
+def getRidOfNonGrammarChars(string):
+    return string.replace(chr(226),'a').replace(chr(234),'e').replace(chr(224),'a').replace('/','_').replace(chr(252),'u').replace(chr(201),'E').replace(chr(232),'e').replace(chr(225),'a').replace(':','_').replace(';','_').replace(chr(237),'i').replace(chr(236),'i').replace(chr(231),'c').replace('!', '').replace('?', '').replace(' ', '_').replace('.', '').replace(chr(233), 'e').replace(chr(243), 'o').replace('\'','').replace('-','').replace('\\', '').replace(',', '').replace('(', '').replace(')', '')
+
 with open('credits.json', encoding='utf-8') as json_file:
     moviesWithPeople = json.load(json_file)
 
@@ -26,9 +30,9 @@ for movie in moviesWithPeople:
 for index, movie in enumerate(moviesData):
     cast_and_crew = moviesWithPeople[index]
     for cast in cast_and_crew['cast']:
-        peopleToMovies[cast['name']].add(movie['title'].replace(' ', '_').replace('.', '').replace(chr(233), 'e').replace('\'','').replace('-',''))
+        peopleToMovies[cast['name']].add(getRidOfNonGrammarChars(movie['title']))
     for crew in cast_and_crew['crew']:
-        peopleToMovies[crew['name']].add(movie['title'].replace(' ', '_').replace('.', '').replace(chr(233),'e').replace('\'','').replace('-',''))
+        peopleToMovies[crew['name']].add(getRidOfNonGrammarChars(movie['title']))
     genreToWrite = ""
     if type(movie['genres']) == list:
         genreToWrite = movie['genres'][0]['name']
@@ -39,7 +43,7 @@ for index, movie in enumerate(moviesData):
         except KeyError:
             pass
 
-    movies.append([movie['id'], movie['title'].replace(' ', '_').replace('.', '').replace(chr(233),'e').replace('-','').replace('\'',''), movie['release_date'][:4], movie['vote_average'], genreToWrite])
+    movies.append([movie['id'], getRidOfNonGrammarChars(movie['title']), movie['release_date'][:4], movie['vote_average'], genreToWrite])
 
 for movie in moviesWithPeople:
     if swappedCount == 0 and count > 250000:
@@ -55,10 +59,10 @@ for movie in moviesWithPeople:
         swappedCount += 1
     
     for person in movie['cast']:
-        output_file.write("INSERT INTO people VALUES FROM (" +  str(person['id']) + ", " + "\"" + person['name'].replace(' ', '_').replace('.','').replace(chr(233), 'e').replace('\'','').replace('-','') + "\", " + str(random.randint(10, 70)) + ", \"" +  person.get("character").replace(' ','_').replace('(','').replace(')','').replace('.', '').replace(chr(233),'e').replace('\'','').replace('-','') + "\", (\"" + "\", \"".join(list(peopleToMovies[person['name']])) + "\"))\n")
+        output_file.write("INSERT INTO people VALUES FROM (" +  str(person['id']) + ", " + "\"" + getRidOfNonGrammarChars(person['name']) + "\", " + str(random.randint(10, 70)) + ", \"" +  getRidOfNonGrammarChars(person.get("character")) + "\", (\"" + "\", \"".join(list(peopleToMovies[person['name']])) + "\"))\n")
         count += 1
     for crew_member in movie['crew']:
-        output_file.write("INSERT INTO people VALUES FROM (" +  str(crew_member['id']) + ", " + "\"" + crew_member['name'].replace(' ', '_').replace('.','').replace(chr(233), 'e').replace('\'','').replace('-','') + "\", " + str(random.randint(10, 70)) + ", \"" +  crew_member['job'].replace(' ', '_').replace('(', '').replace(')','').replace('.','').replace(chr(233),'e').replace('\'','').replace('-','') + "\", (\"" + "\", \"".join(list(peopleToMovies[crew_member['name']])) + "\"))\n")
+        output_file.write("INSERT INTO people VALUES FROM (" +  str(crew_member['id']) + ", " + "\"" + getRidOfNonGrammarChars(crew_member['name']) + "\", " + str(random.randint(10, 70)) + ", \"" +  getRidOfNonGrammarChars(crew_member['job']) + "\", (\"" + "\", \"".join(list(peopleToMovies[crew_member['name']])) + "\"))\n")
         count += 1
 
 for index, movie in enumerate(movies):
