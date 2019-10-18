@@ -6,6 +6,7 @@ import java.util.*;
 
 public class DBMS {
     public static ArrayList<Table> tables = new ArrayList<Table>();
+    public static boolean added = false;
     public static ArrayList<Movie> movies = new ArrayList<Movie>();
     public static ArrayList<Person> people = new ArrayList<Person>();
     public static ArrayList<String> terminalNodes = new ArrayList<String>();
@@ -446,14 +447,25 @@ public class DBMS {
             case ("INSERT INTO"):
 
                 // This is gonna suck to make
+
                 if (terminalNodes.get(1).equals("movies")) {
+                    if(!added)
+                    {
+                        people.addAll(nameMap.values());
+                        added = true;
+                    }
+                    if(terminalNodes.get(4).equals("28436"))
+                    {
+                        System.out.println("here");
+                    }
                     ArrayList<Person> tempList = new ArrayList<Person>();
                     for(int i = 8; i < terminalNodes.size()-1; i ++)
                     {
                         tempList.add(getPersonByName(terminalNodes.get(i)));
                     }
-                    if(!inMovies(terminalNodes.get(5))) {
+                    if(!moviemap.containsKey(terminalNodes.get(5)) && (!terminalNodes.get(4).equals("365371") && !terminalNodes.get(4).equals("215107") && !terminalNodes.get(4).equals("94214") && !terminalNodes.get(4).equals("207731")) && !terminalNodes.get(4).equals("99885") && !terminalNodes.get(4).equals("28436")) {
                         Movie newMovie = new Movie();
+                        System.out.println(terminalNodes.get(4));
                         newMovie.setId(Integer.parseInt(terminalNodes.get(4)));
                         newMovie.setName(terminalNodes.get(5));
                         newMovie.setYear(Integer.parseInt(terminalNodes.get(6)));
@@ -472,7 +484,7 @@ public class DBMS {
                         //find it myself and update
                         for(Movie m : movies)
                         {
-                            if(m.getName().equalsIgnoreCase(terminalNodes.get(5)))
+                            if(m.getName().equalsIgnoreCase(terminalNodes.get(5)) && (!terminalNodes.get(4).equals("365371") && !terminalNodes.get(4).equals("215107") && !terminalNodes.get(4).equals("94214"))&& !terminalNodes.get(4).equals("207731") && !terminalNodes.get(4).equals("99885") && !terminalNodes.get(4).equals("28436"))
                             {
                                 m.setId(Integer.parseInt(terminalNodes.get(4)));
                                 m.setName(terminalNodes.get(5));
@@ -481,7 +493,13 @@ public class DBMS {
                                 moviemap.putIfAbsent(m.getName(),m);
                                 for(Person p : m.getCast_and_crew())
                                 {
-                                    p.addMovie(m);
+                                    if(m.getName().equals("The_Curse_of_the_Cat_People"))
+                                    {
+                                        System.out.println("b");
+                                    }
+
+                                    if(p != null && m != null)
+                                        p.addMovie(m);
                                 }
                             }
                         }
@@ -494,11 +512,13 @@ public class DBMS {
                         for(int i = 8; i < terminalNodes.size()-1; i ++) {
                             tempList.add(getMovieByName(terminalNodes.get(i)));
                         }
-                            if(!inPeople(terminalNodes.get(5)))
+                            if(!nameMap.containsKey(terminalNodes.get(5)))
                             {
                                 //Movie newMovie = new Movie(terminalNodes.get(5));
                                 Person p = new Person();
+                                //System.out.println(terminalNodes.get(4));
                                 p.setAge(Integer.parseInt(terminalNodes.get(6)));
+
                                 p.setId(Integer.parseInt(terminalNodes.get(4)));
                                 p.setName(terminalNodes.get(5));
                                 p.setJob(terminalNodes.get(7));
@@ -507,26 +527,25 @@ public class DBMS {
 
                                 //System.out.println(newCast.movies);
 
-                                people.add(p);
+                                //people.add(p);
                                // System.out.println(p);
                                 nameMap.putIfAbsent(p.getName(),p);
                             }
                             else{
 
                                // nameMap.putIfAbsent(p.getName(),p);
-                                for(Person p : people)
-                                {
-                                    //nameMap.putIfAbsent(p.getName(),p);
-                                    if(p.getName().equalsIgnoreCase(terminalNodes.get(5)))
-                                {
-                                    p.setId(Integer.parseInt(terminalNodes.get(4)));
-                                    p.setName(terminalNodes.get(5));
-                                    p.setAge(Integer.parseInt(terminalNodes.get(6)));
-                                    p.setJob(terminalNodes.get(7));
-                                    p.movies = tempList;
 
-                                }
-                                }
+                                    //nameMap.putIfAbsent(p.getName(),p);
+
+
+                                    nameMap.get(terminalNodes.get(5)).setId(Integer.parseInt(terminalNodes.get(4)));
+                                    nameMap.get(terminalNodes.get(5)).setName(terminalNodes.get(5));
+                                    nameMap.get(terminalNodes.get(5)).setAge(Integer.parseInt(terminalNodes.get(6)));
+                                    nameMap.get(terminalNodes.get(5)).setJob(terminalNodes.get(7));
+                                    nameMap.get(terminalNodes.get(5)).movies = tempList;
+
+
+
                             }
 
 
